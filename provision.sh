@@ -10,7 +10,7 @@ sudo apt-get -y update
 sudo apt-get -y upgrade
 sudo apt-get -y dist-upgrade
 
-sudo apt-get -y install postgresql postgresql-client
+sudo apt-get -y install postgresql postgresql-client libpq-dev 
 sudo apt-get -y install nginx
 sudo apt-get -y install memcached libjpeg62-dev libfreetype6-dev python-dev python-virtualenv python-pip
 
