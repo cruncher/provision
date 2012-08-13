@@ -1,4 +1,10 @@
 #!/bin/bash
+
+apt-get install -y sudo
+sudo apt-get -y update
+sudo apt-get -y upgrade
+sudo apt-get -y dist-upgrade
+
 wget http://nginx.org/keys/nginx_signing.key
 sudo apt-key add nginx_signing.key
 rm nginx_signing.key
@@ -6,9 +12,8 @@ rm nginx_signing.key
 sudo su -c 'echo "deb http://nginx.org/packages/debian/ squeeze nginx" >> /etc/apt/sources.list'
 sudo su -c 'echo "deb-src http://nginx.org/packages/debian/ squeeze nginx" >> /etc/apt/sources.list'
 
-sudo apt-get -y update
-sudo apt-get -y upgrade
-sudo apt-get -y dist-upgrade
+
+
 
 sudo apt-get -y install postgresql postgresql-client libpq-dev 
 sudo apt-get -y install nginx
