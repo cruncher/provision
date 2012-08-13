@@ -50,3 +50,4 @@ sed -i 's/SUPERVISORCTL=\/usr\/bin/SUPERVISORCTL=\/usr\/local\/bin/g' debian-nor
 sudo mv debian-norrgard /etc/init.d/supervisord
 sudo chmod +x /etc/init.d/supervisord
 sudo update-rc.d supervisord defaults
+/etc/init.d/supervisord start
