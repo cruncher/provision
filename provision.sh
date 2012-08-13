@@ -11,13 +11,16 @@ rm nginx_signing.key
 
 sudo su -c 'echo "deb http://nginx.org/packages/debian/ squeeze nginx" >> /etc/apt/sources.list'
 sudo su -c 'echo "deb-src http://nginx.org/packages/debian/ squeeze nginx" >> /etc/apt/sources.list'
+sudo su -c 'echo "mbi    ALL=(ALL) ALL" >> /etc/sudoers'
 
-
-
+# Remove apache
+sudo apt-get remove -y --purge libapache2-mod-php5  apache2 libapache2-mod-php5filter php5
+sudo apt-get autoremove -y
+sudo apt-get purge
 
 sudo apt-get -y install postgresql postgresql-client libpq-dev 
 sudo apt-get -y install nginx
-sudo apt-get -y install memcached libjpeg62-dev libfreetype6-dev python-dev python-virtualenv python-pip git-core
+sudo apt-get -y install memcached libjpeg62-dev libfreetype6-dev python-dev python-virtualenv python-pip git-core screen zsh vim
 
 sudo pip install supervisor
 sudo mkdir /etc/supervisord.d
