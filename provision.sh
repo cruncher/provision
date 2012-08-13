@@ -20,7 +20,7 @@ sudo apt-get purge
 
 sudo apt-get -y install postgresql postgresql-client libpq-dev 
 sudo apt-get -y install nginx
-sudo apt-get -y install memcached libjpeg62-dev libfreetype6-dev python-dev python-virtualenv python-pip git-core screen zsh vim
+sudo apt-get -y install memcached libjpeg62-dev libfreetype6-dev python-dev python-virtualenv python-pip git-core screen zsh vim gettext duplicity
 
 sudo pip install supervisor
 sudo mkdir /etc/supervisord.d
