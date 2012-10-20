@@ -56,3 +56,5 @@ sudo mv debian-norrgard /etc/init.d/supervisord
 sudo chmod +x /etc/init.d/supervisord
 sudo update-rc.d supervisord defaults
 /etc/init.d/supervisord start
+/etc/init.d/nginx stop
+
