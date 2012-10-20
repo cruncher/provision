@@ -24,6 +24,8 @@ sudo apt-get -y  -qq install postgresql postgresql-client libpq-dev postgis
 sudo apt-get -y  -qq install nginx
 sudo apt-get -y  -qq install memcached libjpeg62-dev libfreetype6-dev python-dev python-virtualenv python-pip git-core screen zsh vim gettext duplicity ncftp
 
+sudo apt-get -qq -y update
+sudo apt-get  -qq -y upgrade
 
 sudo pip install supervisor
 sudo mkdir /etc/supervisord.d
