@@ -20,7 +20,7 @@ sudo apt-get remove  -qq -y --purge libapache2-mod-php5  apache2 libapache2-mod-
 sudo apt-get autoremove  -qq -y
 sudo apt-get purge  -qq
 
-sudo apt-get -y  -qq install postgresql postgresql-client libpq-dev postgis
+sudo apt-get -y  -qq install postgresql postgresql-client libpq-dev postgis postgresql-8.4-postgis
 sudo apt-get -y  -qq install nginx
 sudo apt-get -y  -qq install memcached libjpeg62-dev libfreetype6-dev python-dev python-virtualenv python-pip git-core screen zsh vim gettext duplicity ncftp
 
