@@ -12,6 +12,8 @@ rm nginx_signing.key
 sudo su -c 'echo "deb http://nginx.org/packages/debian/ squeeze nginx" >> /etc/apt/sources.list'
 sudo su -c 'echo "deb-src http://nginx.org/packages/debian/ squeeze nginx" >> /etc/apt/sources.list'
 sudo su -c 'echo "mbi    ALL=(ALL) ALL" >> /etc/sudoers'
+sudo su -c 'echo "Cmnd_Alias PROJECT_CMND = /usr/local/bin/supervisorctl status*, /usr/local/bin/supervisorctl restart*, /etc/init.d/nginx reload*" >> /etc/sudoers'
+sudo su -c 'echo "# xxx ALL=(root) NOPASSWD: PROJECT_CMND"'
 
 # Remove apache
 sudo apt-get remove -y --purge libapache2-mod-php5  apache2 libapache2-mod-php5filter php5
