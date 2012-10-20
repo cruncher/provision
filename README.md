@@ -2,7 +2,7 @@ Quick and dirty provisioning script, will install the following on a bare Debian
 
 * nginx
 * supervisor (with rc.d init scripts)
-* PostrgreSQL
+* PostrgreSQL and PostGIS
 * Imaging libraries for PIL
 * virtualenv
 * memcached
