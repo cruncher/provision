@@ -27,6 +27,9 @@ sudo apt-get -y  -qq install memcached libjpeg62-dev libfreetype6-dev python-dev
 sudo apt-get -qq -y update
 sudo apt-get  -qq -y upgrade
 
+# postgis template
+sudo su - postgres -c 'curl https://docs.djangoproject.com/en/dev/_downloads/create_template_postgis-debian1.sh|sh'
+
 sudo pip install supervisor
 sudo mkdir /etc/supervisord.d
 
