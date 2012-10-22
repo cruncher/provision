@@ -22,7 +22,7 @@ sudo apt-get purge
 
 sudo apt-get -y  install postgresql postgresql-client libpq-dev postgis postgresql-8.4-postgis
 sudo apt-get -y  install nginx
-sudo apt-get -y  install memcached libjpeg62-dev libfreetype6-dev python-dev python-virtualenv python-pip git-core screen zsh vim gettext duplicity ncftp
+sudo apt-get -y  install memcached libjpeg62-dev libfreetype6-dev python-dev python-virtualenv python-pip git-core screen zsh vim gettext duplicity ncftp shorewall
 
 sudo apt-get -y update
 sudo apt-get  -y upgrade
