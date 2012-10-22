@@ -1,9 +1,9 @@
 #!/bin/bash
 
-apt-get install -qq -y sudo
-sudo apt-get -qq -y update
-sudo apt-get  -qq -y upgrade
-sudo apt-get  -qq -y dist-upgrade
+apt-get install -y sudo
+sudo apt-get -y update
+sudo apt-get -y upgrade
+sudo apt-get -y dist-upgrade
 
 wget http://nginx.org/keys/nginx_signing.key
 sudo apt-key add nginx_signing.key
@@ -16,16 +16,16 @@ sudo su -c 'echo "Cmnd_Alias PROJECT_CMND = /usr/local/bin/supervisorctl status*
 sudo su -c 'echo "# xxx ALL=(root) NOPASSWD: PROJECT_CMND" >> /etc/sudoers'
 
 # Remove apache
-sudo apt-get remove  -qq -y --purge libapache2-mod-php5  apache2 libapache2-mod-php5filter php5
-sudo apt-get autoremove  -qq -y
-sudo apt-get purge  -qq
+sudo apt-get remove  -y --purge libapache2-mod-php5  apache2 libapache2-mod-php5filter php5
+sudo apt-get autoremove  -y
+sudo apt-get purge
 
-sudo apt-get -y  -qq install postgresql postgresql-client libpq-dev postgis postgresql-8.4-postgis
-sudo apt-get -y  -qq install nginx
-sudo apt-get -y  -qq install memcached libjpeg62-dev libfreetype6-dev python-dev python-virtualenv python-pip git-core screen zsh vim gettext duplicity ncftp
+sudo apt-get -y  install postgresql postgresql-client libpq-dev postgis postgresql-8.4-postgis
+sudo apt-get -y  install nginx
+sudo apt-get -y  install memcached libjpeg62-dev libfreetype6-dev python-dev python-virtualenv python-pip git-core screen zsh vim gettext duplicity ncftp
 
-sudo apt-get -qq -y update
-sudo apt-get  -qq -y upgrade
+sudo apt-get -y update
+sudo apt-get  -y upgrade
 
 # postgis template
 sudo su - postgres -c 'curl https://docs.djangoproject.com/en/dev/_downloads/create_template_postgis-debian1.sh|sh'
