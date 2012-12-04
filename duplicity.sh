@@ -20,8 +20,8 @@ mkdir -p /var/log/duplicity
 date >>/var/log/duplicity/etc.log
 date >>/var/log/duplicity/home.log
 
-duplicity remove-older-than 2M -v5 --allow-source-mismatch ftp://$FTP_URL/etc >>/var/log/duplicity/etc.log
-duplicity remove-older-than 2M -v5 --allow-source-mismatch ftp://$FTP_URL/home >>/var/log/duplicity/home.log
+duplicity remove-older-than 2M -v5 --allow-source-mismatch --force ftp://$FTP_URL/etc >>/var/log/duplicity/etc.log
+duplicity remove-older-than 2M -v5 --allow-source-mismatch --force ftp://$FTP_URL/home >>/var/log/duplicity/home.log
 
 if [ $DATE_TODAY = 01 ]
 then
