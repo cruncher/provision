@@ -29,6 +29,7 @@ sudo apt-get  -y upgrade
 # postgis template
 sudo su - postgres -c 'curl https://docs.djangoproject.com/en/dev/_downloads/create_template_postgis-debian1.sh|sh'
 
+## SUPERVISORD ##
 sudo pip install supervisor
 sudo mkdir /etc/supervisord.d
 
@@ -53,6 +54,17 @@ files = /etc/supervisord.d/*.conf
 EO_CONF
 sudo mv supervisord.conf /etc
 
+wget https://raw.github.com/Supervisor/initscripts/master/debian-norrgard
+sed -i 's/DAEMON=\/usr\/bin/DAEMON=\/usr\/local\/bin/g' debian-norrgard
+sed -i 's/SUPERVISORCTL=\/usr\/bin/SUPERVISORCTL=\/usr\/local\/bin/g' debian-norrgard
+sed -i 's/DAEMON_ARGS="--pidfile \${PIDFILE}"/DAEMON_ARGS="--pidfile \${PIDFILE} -c \/etc\/supervisord.conf"/g' debian-norrgard
+sudo mv debian-norrgard /etc/init.d/supervisord
+sudo chmod +x /etc/init.d/supervisord
+sudo update-rc.d supervisord defaults
+/etc/init.d/supervisord start
+/etc/init.d/nginx stop
+
+## SYSCTL ##
 cat > 98-mem-tuning.conf <<EO_CONF
 kernel.shmmax=8589934592
 kernel.shmall=2097152
@@ -80,17 +92,7 @@ sudo mv 98-mem-tuning.conf 99-network-tuning.conf /etc/sysctl.d/
 sudo /sbin/sysctl -p /etc/sysctl.d/98-mem-tuning.conf
 sudo /sbin/sysctl -p /etc/sysctl.d/99-network-tuning.conf
 
-wget https://raw.github.com/Supervisor/initscripts/master/debian-norrgard
-sed -i 's/DAEMON=\/usr\/bin/DAEMON=\/usr\/local\/bin/g' debian-norrgard
-sed -i 's/SUPERVISORCTL=\/usr\/bin/SUPERVISORCTL=\/usr\/local\/bin/g' debian-norrgard
-sed -i 's/DAEMON_ARGS="--pidfile \${PIDFILE}"/DAEMON_ARGS="--pidfile \${PIDFILE} -c \/etc\/supervisord.conf"/g' debian-norrgard
-sudo mv debian-norrgard /etc/init.d/supervisord
-sudo chmod +x /etc/init.d/supervisord
-sudo update-rc.d supervisord defaults
-/etc/init.d/supervisord start
-/etc/init.d/nginx stop
-
-
+## VIMRC ##
 cat > vimrc <<EO_CONF
 runtime! debian.vim
 syntax on
