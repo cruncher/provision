@@ -84,6 +84,12 @@ wget https://raw.github.com/Supervisor/initscripts/master/debian-norrgard
 sed -i 's/DAEMON=\/usr\/bin/DAEMON=\/usr\/local\/bin/g' debian-norrgard
 sed -i 's/SUPERVISORCTL=\/usr\/bin/SUPERVISORCTL=\/usr\/local\/bin/g' debian-norrgard
 sed -i 's/DAEMON_ARGS="--pidfile \${PIDFILE}"/DAEMON_ARGS="--pidfile \${PIDFILE} -c \/etc\/supervisord.conf"/g' debian-norrgard
+sudo mv debian-norrgard /etc/init.d/supervisord
+sudo chmod +x /etc/init.d/supervisord
+sudo update-rc.d supervisord defaults
+/etc/init.d/supervisord start
+/etc/init.d/nginx stop
+
 
 cat > vimrc <<EO_CONF
 runtime! debian.vim
@@ -104,9 +110,4 @@ mv /etc/vim/vimrc /etc/vim/vimrc.bckup
 mv vimrc /etc/vim/vimrc
 
 
-sudo mv debian-norrgard /etc/init.d/supervisord
-sudo chmod +x /etc/init.d/supervisord
-sudo update-rc.d supervisord defaults
-/etc/init.d/supervisord start
-/etc/init.d/nginx stop
 
