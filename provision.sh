@@ -77,12 +77,32 @@ vm.min_free_kbytes=65536
 EO_CONF
 
 sudo mv 98-mem-tuning.conf 99-network-tuning.conf /etc/sysctl.d/
-sudo /sbin/sysctl -p
+sudo /sbin/sysctl -p /etc/sysctl.d/98-mem-tuning.conf
+sudo /sbin/sysctl -p /etc/sysctl.d/99-network-tuning.conf
 
 wget https://raw.github.com/Supervisor/initscripts/master/debian-norrgard
 sed -i 's/DAEMON=\/usr\/bin/DAEMON=\/usr\/local\/bin/g' debian-norrgard
 sed -i 's/SUPERVISORCTL=\/usr\/bin/SUPERVISORCTL=\/usr\/local\/bin/g' debian-norrgard
 sed -i 's/DAEMON_ARGS="--pidfile \${PIDFILE}"/DAEMON_ARGS="--pidfile \${PIDFILE} -c \/etc\/supervisord.conf"/g' debian-norrgard
+
+cat > vimrc <<EO_CONF
+runtime! debian.vim
+syntax on
+set background=dark
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+endif
+if has("autocmd")
+  filetype plugin indent on
+endif
+set incsearch           " Incremental search
+if filereadable("/etc/vim/vimrc.local")
+  source /etc/vim/vimrc.local
+endif
+EO_CONF
+mv /etc/vim/vimrc /etc/vim/vimrc.bckup
+mv vimrc /etc/vim/vimrc
+
 
 sudo mv debian-norrgard /etc/init.d/supervisord
 sudo chmod +x /etc/init.d/supervisord
