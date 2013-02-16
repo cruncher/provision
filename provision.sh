@@ -1,37 +1,37 @@
 #!/bin/bash
 
 apt-get install -y sudo
-sudo apt-get -y update
-sudo apt-get -y upgrade
-sudo apt-get -y dist-upgrade
+apt-get -y update
+apt-get -y upgrade
+apt-get -y dist-upgrade
 
 wget http://nginx.org/keys/nginx_signing.key
-sudo apt-key add nginx_signing.key
+apt-key add nginx_signing.key
 rm nginx_signing.key
 
-sudo su -c 'echo "deb http://nginx.org/packages/debian/ squeeze nginx" >> /etc/apt/sources.list'
-sudo su -c 'echo "deb-src http://nginx.org/packages/debian/ squeeze nginx" >> /etc/apt/sources.list'
-sudo su -c 'echo "Cmnd_Alias PROJECT_CMND = /usr/local/bin/supervisorctl status*, /usr/local/bin/supervisorctl restart*, /etc/init.d/nginx reload*" >> /etc/sudoers'
-sudo su -c 'echo "# xxx ALL=(root) NOPASSWD: PROJECT_CMND" >> /etc/sudoers'
+echo "deb http://nginx.org/packages/debian/ squeeze nginx" >> /etc/apt/sources.list
+echo "deb-src http://nginx.org/packages/debian/ squeeze nginx" >> /etc/apt/sources.list
+echo "Cmnd_Alias PROJECT_CMND = /usr/local/bin/supervisorctl status*, /usr/local/bin/supervisorctl restart*, /etc/init.d/nginx reload*" >> /etc/sudoers
+echo "# xxx ALL=(root) NOPASSWD: PROJECT_CMND" >> /etc/sudoers
 
 # Remove apache
-sudo apt-get remove  -y --purge libapache2-mod-php5  apache2 libapache2-mod-php5filter php5
-sudo apt-get autoremove  -y
-sudo apt-get purge
+apt-get remove  -y --purge libapache2-mod-php5  apache2 libapache2-mod-php5filter php5
+apt-get autoremove  -y
+apt-get purge
 
-sudo apt-get -y  install postgresql postgresql-client libpq-dev postgis postgresql-8.4-postgis gdal-contrib gdal-bin mcelog
-sudo apt-get -y  install nginx
-sudo apt-get -y  install memcached libjpeg62-dev libfreetype6-dev python-dev python-virtualenv python-pip git-core screen zsh vim gettext duplicity ncftp shorewall unzip
+apt-get -y  install postgresql postgresql-client libpq-dev postgis postgresql-8.4-postgis gdal-contrib gdal-bin mcelog
+apt-get -y  install nginx
+apt-get -y  install memcached libjpeg62-dev libfreetype6-dev python-dev python-virtualenv python-pip git-core screen zsh vim gettext duplicity ncftp shorewall unzip
 
-sudo apt-get -y update
-sudo apt-get  -y upgrade
+apt-get -y update
+apt-get  -y upgrade
 
 # postgis template
-sudo su - postgres -c 'curl https://docs.djangoproject.com/en/dev/_downloads/create_template_postgis-debian1.sh|sh'
+su - postgres -c 'curl https://docs.djangoproject.com/en/dev/_downloads/create_template_postgis-debian1.sh|sh'
 
 ## SUPERVISORD ##
-sudo pip install supervisor
-sudo mkdir /etc/supervisord.d
+pip install supervisor
+mkdir /etc/supervisord.d
 
 cat > supervisord.conf <<EO_CONF
 [unix_http_server]
@@ -52,15 +52,15 @@ serverurl=unix:///var/tmp/supervisor.sock ; use a unix:// URL  for a unix socket
 [include]
 files = /etc/supervisord.d/*.conf
 EO_CONF
-sudo mv supervisord.conf /etc
+mv supervisord.conf /etc
 
 wget --no-check-certificate https://raw.github.com/Supervisor/initscripts/master/debian-norrgard
 sed -i 's/DAEMON=\/usr\/bin/DAEMON=\/usr\/local\/bin/g' debian-norrgard
 sed -i 's/SUPERVISORCTL=\/usr\/bin/SUPERVISORCTL=\/usr\/local\/bin/g' debian-norrgard
 sed -i 's/DAEMON_ARGS="--pidfile \${PIDFILE}"/DAEMON_ARGS="--pidfile \${PIDFILE} -c \/etc\/supervisord.conf"/g' debian-norrgard
-sudo mv debian-norrgard /etc/init.d/supervisord
-sudo chmod +x /etc/init.d/supervisord
-sudo update-rc.d supervisord defaults
+mv debian-norrgard /etc/init.d/supervisord
+chmod +x /etc/init.d/supervisord
+update-rc.d supervisord defaults
 /etc/init.d/supervisord start
 /etc/init.d/nginx stop
 sed -i 's/include \/etc\/nginx\/conf.d\/\*\.conf;/include \/etc\/nginx\/sites-enabled\/\*\.conf;/g' /etc/nginx/nginx.conf
@@ -90,9 +90,9 @@ net.ipv4.tcp_wmem=4096 65536 16777216
 vm.min_free_kbytes=65536
 EO_CONF
 
-sudo mv 98-mem-tuning.conf 99-network-tuning.conf /etc/sysctl.d/
-sudo /sbin/sysctl -p /etc/sysctl.d/98-mem-tuning.conf
-sudo /sbin/sysctl -p /etc/sysctl.d/99-network-tuning.conf
+mv 98-mem-tuning.conf 99-network-tuning.conf /etc/sysctl.d/
+/sbin/sysctl -p /etc/sysctl.d/98-mem-tuning.conf
+/sbin/sysctl -p /etc/sysctl.d/99-network-tuning.conf
 
 ## VIMRC ##
 cat > vimrc <<EO_CONF
