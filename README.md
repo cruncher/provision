@@ -10,6 +10,6 @@ Quick and dirty provisioning script, will install the following on a bare Debian
 
 Usage:
 
-    curl https://raw.github.com/cruncher/provision/master/provision.sh | sh
+    sh -c "`curl https://raw.github.com/cruncher/provision/master/provision.sh`"
 
     
