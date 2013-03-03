@@ -11,10 +11,11 @@ if [ "$yn" = "y" ]; then
   mv sources.list /etc/apt/
 fi
 
-apt-get install -y sudo
+
 apt-get -y update
 apt-get -y upgrade
 apt-get -y dist-upgrade
+apt-get install -y sudo
 
 wget http://nginx.org/keys/nginx_signing.key
 apt-key add nginx_signing.key
@@ -22,8 +23,8 @@ rm nginx_signing.key
 
 echo "deb http://nginx.org/packages/debian/ squeeze nginx" >> /etc/apt/sources.list
 echo "deb-src http://nginx.org/packages/debian/ squeeze nginx" >> /etc/apt/sources.list
-# echo "Cmnd_Alias PROJECT_CMND = /usr/local/bin/supervisorctl status*, /usr/local/bin/supervisorctl restart*, /etc/init.d/nginx reload*" >> /etc/sudoers
-# echo "# xxx ALL=(root) NOPASSWD: PROJECT_CMND" >> /etc/sudoers
+echo "Cmnd_Alias PROJECT_CMND = /usr/local/bin/supervisorctl status*, /usr/local/bin/supervisorctl restart*, /etc/init.d/nginx reload*" >> /etc/sudoers
+echo "# xxx ALL=(root) NOPASSWD: PROJECT_CMND" >> /etc/sudoers
 
 # Remove apache
 apt-get remove  -y --purge libapache2-mod-php5  apache2 libapache2-mod-php5filter php5
