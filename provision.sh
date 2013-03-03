@@ -3,6 +3,7 @@
 
 read -p "update sources.list? (y/n)? " yn
 if [ "$yn" = "y" ]; then
+  apt-get -y update
   apt-get -y install netselect-apt
   /usr/bin/netselect-apt -n squeeze -o sources.list
   sed -i 's/# deb http:\/\/security.debian.org/deb http:\/\/security.debian.org/g' sources.list
