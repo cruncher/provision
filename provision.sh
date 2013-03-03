@@ -37,7 +37,7 @@ apt-get -y update
 apt-get  -y upgrade
 
 # postgis template
-su - postgres -c 'curl https://docs.djangoproject.com/en/dev/_downloads/create_template_postgis-debian1.sh|sh'
+su - postgres -c 'curl https://docs.djangoproject.com/en/1.5/_downloads/create_template_postgis-debian.sh|sh'
 
 ## SUPERVISORD ##
 pip install supervisor
