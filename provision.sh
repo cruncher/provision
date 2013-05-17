@@ -1,13 +1,14 @@
 #!/bin/bash
 
+DISTRIB=wheezy
 
 read -p "update sources.list? (y/n)? " yn
 if [ "$yn" = "y" ]; then
   apt-get -y update
   apt-get -y install netselect-apt
-  /usr/bin/netselect-apt -n squeeze -o sources.list
+  /usr/bin/netselect-apt -n $DISTRIB -o sources.list
   sed -i 's/# deb http:\/\/security.debian.org/deb http:\/\/security.debian.org/g' sources.list
-  sed -i 's/stable\/updates/squeeze\/updates/g' sources.list
+  sed -i "s/stable\/updates/$DISTRIB\/updates/g" sources.list
   mv /etc/apt/sources.list /etc/apt/sources.list.backup
   mv sources.list /etc/apt/
 fi
@@ -18,12 +19,6 @@ apt-get -y upgrade
 apt-get -y dist-upgrade
 apt-get install -y sudo
 
-wget http://nginx.org/keys/nginx_signing.key
-apt-key add nginx_signing.key
-rm nginx_signing.key
-
-echo "deb http://nginx.org/packages/debian/ squeeze nginx" >> /etc/apt/sources.list
-echo "deb-src http://nginx.org/packages/debian/ squeeze nginx" >> /etc/apt/sources.list
 echo "Cmnd_Alias PROJECT_CMND = /usr/local/bin/supervisorctl status*, /usr/local/bin/supervisorctl restart*, /etc/init.d/nginx reload*" >> /etc/sudoers
 echo "# xxx ALL=(root) NOPASSWD: PROJECT_CMND" >> /etc/sudoers
 
@@ -32,15 +27,21 @@ apt-get remove  -y --purge libapache2-mod-php5  apache2 libapache2-mod-php5filte
 apt-get autoremove  -y
 apt-get purge
 
-apt-get -y  install postgresql postgresql-client libpq-dev postgis postgresql-8.4-postgis gdal-contrib gdal-bin mcelog apt-dater-host
-apt-get -y  install nginx
+apt-get -y  install nginx postgresql postgresql-client postgresql-contrib libpq-dev postgis postgresql-9.1-postgis gdal-contrib gdal-bin mcelog apt-dater-host
 apt-get -y  install memcached libjpeg62-dev libfreetype6-dev python-dev python-virtualenv python-pip git-core screen zsh vim gettext duplicity ncftp shorewall unzip
 
-apt-get -y update
-apt-get  -y upgrade
 
 # postgis template
-su - postgres -c 'curl https://docs.djangoproject.com/en/1.5/_downloads/create_template_postgis-debian.sh|sh'
+sudo su postgres -c'createdb -E UTF8 -U postgres template_postgis'
+sudo su postgres -c'createlang -d template_postgis plpgsql;'
+sudo su postgres -c'psql -U postgres -d template_postgis -c"CREATE EXTENSION hstore;"'
+sudo su postgres -c'psql -U postgres -d template_postgis -f /usr/share/postgresql/9.1/contrib/postgis-1.5/postgis.sql'
+sudo su postgres -c'psql -U postgres -d template_postgis -f /usr/share/postgresql/9.1/contrib/postgis-1.5/spatial_ref_sys.sql'
+sudo su postgres -c'psql -U postgres -d template_postgis -c"select postgis_lib_version();"'
+sudo su postgres -c'psql -U postgres -d template_postgis -c "GRANT ALL ON geometry_columns TO PUBLIC;"'
+sudo su postgres -c'psql -U postgres -d template_postgis -c "GRANT ALL ON spatial_ref_sys TO PUBLIC;"'
+sudo su postgres -c'psql -U postgres -d template_postgis -c "GRANT ALL ON geography_columns TO PUBLIC;"'
+
 
 ## SUPERVISORD ##
 pip install supervisor
@@ -76,7 +77,7 @@ chmod +x /etc/init.d/supervisord
 update-rc.d supervisord defaults
 /etc/init.d/supervisord start
 /etc/init.d/nginx stop
-sed -i 's/include \/etc\/nginx\/conf.d\/\*\.conf;/include \/etc\/nginx\/sites-enabled\/\*\.conf;/g' /etc/nginx/nginx.conf
+#sed -i 's/include \/etc\/nginx\/conf.d\/\*\.conf;/include \/etc\/nginx\/sites-enabled\/\*\.conf;/g' /etc/nginx/nginx.conf
 
 
 ## SYSCTL ##
@@ -128,14 +129,14 @@ mv vimrc /etc/vim/vimrc
 
 # skel content
 cd /etc/skel/
-curl https://dl.dropbox.com/u/63072/Data/skel.tar.gz | tar xvfz -
-cd 
+curl -L https://dl.dropbox.com/u/63072/Data/skel.tar.gz | tar xvfz -
+cd
 # base stuff
-curl -O https://dl.dropbox.com/u/63072/Data/shorewall.zip
+curl -OL https://dl.dropbox.com/u/63072/Data/shorewall.zip
 curl -O https://raw.github.com/cruncher/provision/master/user_add.sh
 curl -O https://raw.github.com/cruncher/provision/master/duplicity.sh
 
-clear 
+clear
 echo "all done..."
 ls
 
