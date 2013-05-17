@@ -128,14 +128,14 @@ mv vimrc /etc/vim/vimrc
 
 # skel content
 cd /etc/skel/
-curl https://dl.dropbox.com/u/63072/Data/skel.tar.gz | tar xvfz -
-cd 
+curl -L https://dl.dropbox.com/u/63072/Data/skel.tar.gz | tar xvfz -
+cd
 # base stuff
-curl -O https://dl.dropbox.com/u/63072/Data/shorewall.zip
+curl -OL https://dl.dropbox.com/u/63072/Data/shorewall.zip
 curl -O https://raw.github.com/cruncher/provision/master/user_add.sh
 curl -O https://raw.github.com/cruncher/provision/master/duplicity.sh
 
-clear 
+clear
 echo "all done..."
 ls
 
