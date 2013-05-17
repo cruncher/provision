@@ -135,6 +135,16 @@ curl -OL https://dl.dropbox.com/u/63072/Data/shorewall.zip
 curl -O https://raw.github.com/cruncher/provision/master/user_add.sh
 curl -O https://raw.github.com/cruncher/provision/master/duplicity.sh
 
+cd /etc/
+unzip /root/shorewall.zip
+sed -i 's/startup=0/startup=1/g' /etc/default/shorewall
+/etc/init.d/shorewall start
+rm /root/shorewall.zip
+cd
+
+sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/g' /etc/ssh/sshd_config
+/etc/init.d/ssh restart
+
 clear
 echo "all done..."
 ls
