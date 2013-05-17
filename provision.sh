@@ -133,6 +133,17 @@ curl -L https://dl.dropbox.com/u/63072/Data/skel.tar.gz | tar xvfz -
 cd
 # base stuff
 curl -OL https://dl.dropbox.com/u/63072/Data/shorewall.zip
+
+cd /etc/
+unzip /root/shorewall.zip
+sed -i 's/startup=0/startup=1/g' /etc/default/shorewall
+/etc/init.d/shorewall start
+rm /root/shorewall.zip
+
+sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/g' /etc/ssh/sshd_config
+/etc/init.d/ssh restart
+
+
 curl -O https://raw.github.com/cruncher/provision/master/user_add.sh
 curl -O https://raw.github.com/cruncher/provision/master/duplicity.sh
 
