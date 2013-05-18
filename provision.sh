@@ -143,10 +143,10 @@ rm /root/shorewall.zip
 sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/g' /etc/ssh/sshd_config
 /etc/init.d/ssh restart
 
-
+cd
 curl -O https://raw.github.com/cruncher/provision/master/user_add.sh
 curl -O https://raw.github.com/cruncher/provision/master/duplicity.sh
-cd
+
 clear
 echo "all done..."
 ls
