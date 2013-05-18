@@ -146,7 +146,7 @@ sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/g' /etc/ssh/sshd
 
 curl -O https://raw.github.com/cruncher/provision/master/user_add.sh
 curl -O https://raw.github.com/cruncher/provision/master/duplicity.sh
-
+cd
 clear
 echo "all done..."
 ls
