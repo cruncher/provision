@@ -80,8 +80,8 @@ sed -i 's/include \/etc\/nginx\/conf.d\/\*\.conf;/include \/etc\/nginx\/sites-en
 
 
 ## SYSCTL ##
+#kernel.shmmax=8589934592
 cat > 98-mem-tuning.conf <<EO_CONF
-kernel.shmmax=8589934592
 kernel.shmall=2097152
 EO_CONF
 
