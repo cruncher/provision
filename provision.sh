@@ -18,12 +18,15 @@ apt-get -y upgrade
 apt-get -y dist-upgrade
 apt-get install -y sudo
 
-wget http://nginx.org/keys/nginx_signing.key
-apt-key add nginx_signing.key
-rm nginx_signing.key
 
-echo "deb http://nginx.org/packages/debian/ squeeze nginx" >> /etc/apt/sources.list
-echo "deb-src http://nginx.org/packages/debian/ squeeze nginx" >> /etc/apt/sources.list
+## Nginx: use stock version to facilitate upgrading to wheezy
+#wget http://nginx.org/keys/nginx_signing.key
+#apt-key add nginx_signing.key
+#rm nginx_signing.key
+#echo "deb http://nginx.org/packages/debian/ squeeze nginx" >> /etc/apt/sources.list
+#echo "deb-src http://nginx.org/packages/debian/ squeeze nginx" >> /etc/apt/sources.list
+
+
 echo "Cmnd_Alias PROJECT_CMND = /usr/local/bin/supervisorctl status*, /usr/local/bin/supervisorctl restart*, /etc/init.d/nginx reload*" >> /etc/sudoers
 echo "# xxx ALL=(root) NOPASSWD: PROJECT_CMND" >> /etc/sudoers
 
