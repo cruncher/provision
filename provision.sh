@@ -59,6 +59,7 @@ pidfile=/var/run/supervisord.pid ; (supervisord pidfile;default supervisord.pid)
 nodaemon=false               ; (start in foreground if true;default false)
 minfds=1024                  ; (min. avail startup file descriptors;default 1024)
 minprocs=200                 ; (min. avail process descriptors;default 200)
+environment=LANG=en_US.UTF-8, LC_ALL=en_US.UTF-8, LC_LANG=en_US.UTF-8
 [rpcinterface:supervisor]
 supervisor.rpcinterface_factory = supervisor.rpcinterface:make_main_rpcinterface
 [supervisorctl]
