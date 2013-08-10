@@ -151,8 +151,12 @@ cd
 curl -O https://raw.github.com/cruncher/provision/master/user_add.sh
 curl -O https://raw.github.com/cruncher/provision/master/duplicity.sh
 
+cd
+mkdir -p .ssh
+touch .ssh/authorized_keys
+curl https://github.com/mbi.keys >> .ssh/authorized_keys
+
 clear
 echo "all done."
-echo "WANING: SSH password authentication has been disabled. Install an authorized key if not yet done."
 ls
 
