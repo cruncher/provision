@@ -152,6 +152,7 @@ curl -O https://raw.github.com/cruncher/provision/master/user_add.sh
 curl -O https://raw.github.com/cruncher/provision/master/duplicity.sh
 
 clear
-echo "all done..."
+echo "all done."
+echo "WANING: SSH password authentication has been disabled. Install an authorized key if not yet done."
 ls
 
