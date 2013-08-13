@@ -1,4 +1,4 @@
-Quick and dirty provisioning script, will install the following on a bare Debian squeeze:
+Quick and dirty provisioning script, will install the following on a bare Debian wheezy:
 
 * nginx
 * supervisor (with rc.d init scripts)
