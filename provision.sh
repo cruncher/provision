@@ -1,19 +1,5 @@
 #!/bin/bash
 
-DISTRIB=wheezy
-
-read -p "update sources.list? (y/n)? " yn
-if [ "$yn" = "y" ]; then
-  apt-get -y update
-  apt-get -y install netselect-apt
-  /usr/bin/netselect-apt -n $DISTRIB -o sources.list
-  sed -i 's/# deb http:\/\/security.debian.org/deb http:\/\/security.debian.org/g' sources.list
-  sed -i "s/stable\/updates/$DISTRIB\/updates/g" sources.list
-  mv /etc/apt/sources.list /etc/apt/sources.list.backup
-  mv sources.list /etc/apt/
-fi
-
-
 apt-get -y update
 apt-get -y upgrade
 apt-get -y dist-upgrade
@@ -134,15 +120,9 @@ mv vimrc /etc/vim/vimrc
 # skel content
 cd /etc/skel/
 curl -L https://dl.dropbox.com/u/63072/Data/skel.tar.gz | tar xvfz -
+cd .oh-my-zsh
+git pull origin master
 cd
-# base stuff
-curl -OL https://dl.dropbox.com/u/63072/Data/shorewall.zip
-
-cd /etc/
-unzip /root/shorewall.zip
-sed -i 's/startup=0/startup=1/g' /etc/default/shorewall
-/etc/init.d/shorewall start
-rm /root/shorewall.zip
 
 sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/g' /etc/ssh/sshd_config
 /etc/init.d/ssh restart
