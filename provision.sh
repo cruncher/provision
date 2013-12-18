@@ -23,7 +23,7 @@ echo "Cmnd_Alias PROJECT_CMND = /usr/local/bin/supervisorctl status*, /usr/local
 echo "# xxx ALL=(root) NOPASSWD: PROJECT_CMND" >> /etc/sudoers
 
 # Remove apache
-apt-get remove  -y --purge libapache2-mod-php5  apache2 libapache2-mod-php5filter php5
+apt-get remove  -y --purge libapache2-mod-php5 apache2 libapache2-mod-php5filter php5 mysql-common
 apt-get autoremove  -y
 apt-get purge
 
