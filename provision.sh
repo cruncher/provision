@@ -112,6 +112,8 @@ mv 98-mem-tuning.conf 99-network-tuning.conf /etc/sysctl.d/
 /sbin/sysctl -p /etc/sysctl.d/98-mem-tuning.conf
 /sbin/sysctl -p /etc/sysctl.d/99-network-tuning.conf
 
+echo "sysctl -p" >> /etc/rc.local
+
 ## VIMRC ##
 cat > vimrc <<EO_CONF
 runtime! debian.vim
