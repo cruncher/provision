@@ -111,8 +111,7 @@ EO_CONF
 mv 98-mem-tuning.conf 99-network-tuning.conf /etc/sysctl.d/
 /sbin/sysctl -p /etc/sysctl.d/98-mem-tuning.conf
 /sbin/sysctl -p /etc/sysctl.d/99-network-tuning.conf
-
-echo "sysctl -p" >> /etc/rc.local
+sudo sed -i "s/exit 0/sysctl -p\nexit 0/g" /etc/rc.local
 
 ## VIMRC ##
 cat > vimrc <<EO_CONF
