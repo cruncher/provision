@@ -13,6 +13,17 @@ if [ "$yn" = "y" ]; then
   mv sources.list /etc/apt/
 fi
 
+# swap
+read -p "create swap? (y/n)? " yn
+if [ "$yn" = "y" ]; then
+  dd if=/dev/zero of=/swapfile bs=1024 count=1M
+  mkswap /swapfile
+  swapon /swapfile
+  echo " /swapfile       none    swap    sw      0       0" >> /etc/fstab
+  echo 10 | sudo tee /proc/sys/vm/swappiness
+  echo vm.swappiness = 10 | sudo tee -a /etc/sysctl.conf
+  chmod 0600 /swapfile
+fi
 
 apt-get -y update
 apt-get -y upgrade
@@ -116,6 +127,10 @@ mv 98-mem-tuning.conf 99-network-tuning.conf /etc/sysctl.d/
 /sbin/sysctl -p /etc/sysctl.d/98-mem-tuning.conf
 /sbin/sysctl -p /etc/sysctl.d/99-network-tuning.conf
 sudo sed -i "s/exit 0/sysctl -p\nexit 0/g" /etc/rc.local
+
+
+
+
 
 ## VIMRC ##
 cat > vimrc <<EO_CONF
