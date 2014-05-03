@@ -168,8 +168,8 @@ sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/g' /etc/ssh/sshd
 /etc/init.d/ssh restart
 
 cd
-curl -O https://raw.github.com/cruncher/provision/master/user_add.sh
-curl -O https://raw.github.com/cruncher/provision/master/duplicity.sh
+curl -OL https://raw.github.com/cruncher/provision/master/user_add.sh
+curl -OL https://raw.github.com/cruncher/provision/master/duplicity.sh
 
 cd
 mkdir -p .ssh
