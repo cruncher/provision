@@ -10,6 +10,6 @@ Quick and dirty provisioning script, will install the following on a bare Debian
 
 Usage:
 
-    sh -c "`curl https://raw.github.com/cruncher/provision/wheezy-no-postgis/provision.sh`"
+    sh -c "`curl https://raw.githubusercontent.com/cruncher/provision/wheezy-no-postgis/provision.sh`"
 
     
