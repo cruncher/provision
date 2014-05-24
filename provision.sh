@@ -157,13 +157,13 @@ sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/g' /etc/ssh/sshd
 /etc/init.d/ssh restart
 
 cd
-curl -O https://raw.github.com/cruncher/provision/master/user_add.sh
-curl -O https://raw.github.com/cruncher/provision/master/duplicity.sh
+curl -OL https://raw.github.com/cruncher/provision/master/user_add.sh
+curl -OL https://raw.github.com/cruncher/provision/master/duplicity.sh
 
 cd
 mkdir -p .ssh
 touch .ssh/authorized_keys
-curl https://github.com/mbi.keys >> .ssh/authorized_keys
+curl -L https://github.com/mbi.keys >> .ssh/authorized_keys
 
 clear
 echo "all done."
