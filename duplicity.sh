@@ -1,40 +1,102 @@
-#!/bin/sh
+#!/bin/bash
+#
+# Simple script for creating backups with Duplicity.
+# Full backups are made on the 1st day of each month or with the 'full' option.
+# Incremental backups are made on any other days.
+#
+# USAGE: backup.sh [full]
+#
 
-# A duplicity script that backs up /etc and /home to a remote ftp server
+# get day of the month
+DATE=`date +%d`
 
-DATE_TODAY=`date +%d`
-PASSPHRASE='FIXME' # GPG
-FTP_PASSWORD='FIXME'
-FTP_USER='FIXME'
-FTP_HOST='FIXME'
-FTP_URL="$FTP_USER@$FTP_HOST"
+# Set protocol (use scp for sftp and ftp for FTP, see manpage for more)
+BPROTO=rsync
 
-export FTP_URL
-export FTP_PASSWORD
+# set user and hostname of backup account
+BUSER='backups'
+BHOST='backup.cruncher.ch'
+PASSPHRASE=''
 export PASSPHRASE
 
-###############################################
+# Setting the password for the Backup account that the
+# backup files will be transferred to.
+# for sftp a public key can be used, see:
+# http://wiki.hetzner.de/index.php/Backup
+#BPASSWORD='yourpass'
 
-mkdir -p /var/log/duplicity
+# directories to backup (but . for /)
+BDIRS="home"
+LOGDIR='/var/log/duplicity'
 
-date >>/var/log/duplicity/etc.log
-date >>/var/log/duplicity/home.log
+# Setting the pass phrase to encrypt the backup files. Will use symmetrical keys in this case.
 
-duplicity remove-older-than 2M -v5 --allow-source-mismatch --force ftp://$FTP_URL/etc >>/var/log/duplicity/etc.log
-duplicity remove-older-than 2M -v5 --allow-source-mismatch --force ftp://$FTP_URL/home >>/var/log/duplicity/home.log
+# encryption algorithm for gpg, disable for default (CAST5)
+# see available ones via 'gpg --version'
+ALGO=AES
 
-if [ $DATE_TODAY = 01 ]
-then
-        duplicity full -v5 --allow-source-mismatch /etc  ftp://$FTP_URL/etc >>/var/log/duplicity/etc.log
-        duplicity full -v5 --allow-source-mismatch /home ftp://$FTP_URL/home >>/var/log/duplicity/home.log
-else
-        duplicity incremental -v5 --allow-source-mismatch /etc ftp://$FTP_URL/etc >>/var/log/duplicity/etc.log
-        duplicity incremental -v5 --allow-source-mismatch /home ftp://$FTP_URL/home >>/var/log/duplicity/home.log
+##############################
+
+if [ $ALGO ]; then
+ GPGOPT="--gpg-options '--cipher-algo $ALGO'"
 fi
 
-unset FTP_URL
+if [ $BPASSWORD ]; then
+ BAC="$BPROTO://$BUSER:$BPASSWORD@$BHOST"
+else
+ BAC="$BPROTO://$BUSER@$BHOST"
+fi
+
+BAC="$BAC//home/projects/backups/10decembre"
+
+# Check to see if we're at the first of the month.
+# If we are on the 1st day of the month, then run
+# a full backup. If not, then run an incremental
+# backup.
+
+if [ $DATE = 01 ] || [ "$1" = 'full' ]; then
+ TYPE='full'
+else
+ TYPE='incremental'
+fi
+
+for DIR in $BDIRS
+do
+  if [ $DIR = '.' ]; then
+    EXCLUDELIST='/usr/local/etc/duplicity-exclude.conf'
+  else
+    EXCLUDELIST="/usr/local/etc/duplicity-exclude-$DIR.conf"
+  fi
+
+  if [ -f $EXCLUDELIST ]; then
+    EXCLUDE="--exclude-filelist $EXCLUDELIST"
+  else
+    EXCLUDE=''
+  fi
+
+  # first remove everything older than 2 months
+  if [ $DIR = '.' ]; then
+   CMD="duplicity remove-older-than 2M --force -v5 $BAC/system >> $LOGDIR/system.log"
+  else
+   CMD="duplicity remove-older-than 2M --force -v5 $BAC/$DIR >> $LOGDIR/$DIR.log"
+  fi
+  eval $CMD
+
+  # do a backup
+  if [ $DIR = '.' ]; then
+    CMD="duplicity $TYPE -v5 $GPGOPT $EXCLUDE / $BAC/system >> $LOGDIR/system.log"
+  else
+    CMD="duplicity $TYPE -v5 $GPGOPT $EXCLUDE /$DIR $BAC/$DIR >> $LOGDIR/$DIR.log"
+  fi
+  eval  $CMD
+
+done
+
+# Check the manpage for all available options for Duplicity.
+# Unsetting the confidential variables
 unset PASSPHRASE
 unset FTP_PASSWORD
 
 exit 0
+
 
