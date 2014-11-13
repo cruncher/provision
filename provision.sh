@@ -158,7 +158,7 @@ sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/g' /etc/ssh/sshd
 
 cd
 curl -OL https://raw.github.com/cruncher/provision/master/user_add.sh
-curl -OL https://raw.github.com/cruncher/provision/master/duplicity.sh
+curl -OL https://raw.githubusercontent.com/cruncher/provision/wheezy-no-postgis/duplicity.sh
 
 cd
 mkdir -p .ssh
