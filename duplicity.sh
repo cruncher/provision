@@ -47,8 +47,6 @@ else
  BAC="$BPROTO://$BUSER@$BHOST"
 fi
 
-BAC="$BAC//home/projects/backups/10decembre"
-
 # Check to see if we're at the first of the month.
 # If we are on the 1st day of the month, then run
 # a full backup. If not, then run an incremental
