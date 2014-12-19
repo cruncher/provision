@@ -5,7 +5,7 @@ DISTRIB=wheezy
 read -p "update sources.list? (y/n)? " yn
 if [ "$yn" = "y" ]; then
   apt-get -y update
-  apt-get -y install netselect-apt
+  apt-get -y install netselect-apt c
   /usr/bin/netselect-apt -n $DISTRIB -o sources.list
   sed -i 's/# deb http:\/\/security.debian.org/deb http:\/\/security.debian.org/g' sources.list
   sed -i "s/stable\/updates/$DISTRIB\/updates/g" sources.list
