@@ -5,7 +5,7 @@ DISTRIB=wheezy
 read -p "update sources.list? (y/n)? " yn
 if [ "$yn" = "y" ]; then
   apt-get -y update
-  apt-get -y install netselect-apt c
+  apt-get -y install netselect-apt
   /usr/bin/netselect-apt -n $DISTRIB -o sources.list
   sed -i 's/# deb http:\/\/security.debian.org/deb http:\/\/security.debian.org/g' sources.list
   sed -i "s/stable\/updates/$DISTRIB\/updates/g" sources.list
@@ -28,7 +28,7 @@ fi
 apt-get -y update
 apt-get -y upgrade
 apt-get -y dist-upgrade
-apt-get install -y sudo
+apt-get install -y sudo curl
 
 echo "Cmnd_Alias PROJECT_CMND = /usr/local/bin/supervisorctl status*, /usr/local/bin/supervisorctl restart*, /etc/init.d/nginx reload*" >> /etc/sudoers
 echo "# xxx ALL=(root) NOPASSWD: PROJECT_CMND" >> /etc/sudoers
