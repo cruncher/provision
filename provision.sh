@@ -143,10 +143,10 @@ mv vimrc /etc/vim/vimrc
 
 # skel content
 cd /etc/skel/
-curl -L https://dl.dropbox.com/u/63072/Data/skel.tar.gz | tar xvfz -
+curl -L https://raw.githubusercontent.com/cruncher/provision/wheezy-no-postgis/dl/skel.tar.gz | tar xvfz -
 cd
 # base stuff
-curl -OL https://dl.dropbox.com/u/63072/Data/shorewall.zip
+curl -OL https://raw.githubusercontent.com/cruncher/provision/wheezy-no-postgis/dl/shorewall.zip
 
 cd /etc/
 unzip /root/shorewall.zip
