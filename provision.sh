@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DISTRIB=wheezy
+DISTRIB=jessie
 
 read -p "update sources.list? (y/n)? " yn
 if [ "$yn" = "y" ]; then
