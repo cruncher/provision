@@ -35,7 +35,7 @@ echo "# xxx ALL=(root) NOPASSWD: PROJECT_CMND" >> /etc/sudoers
 echo "# mbi ALL=NOPASSWD: /usr/bin/apt-get, /usr/bin/aptitude" >> /etc/sudoers
 
 # Remove apache
-apt-get remove  -y --purge libapache2-mod-php5 apache2 libapache2-mod-php5filter php5 mysql-common
+apt-get remove  -y --purge libapache2-mod-php5 apache2 libapache2-mod-php5filter php5 mysql-common libmysqlclient18
 apt-get autoremove  -y
 apt-get purge
 
@@ -84,10 +84,6 @@ chmod +x /etc/init.d/supervisord
 update-rc.d supervisord defaults
 /etc/init.d/supervisord start
 /etc/init.d/nginx stop
-#sed -i 's/include \/etc\/nginx\/conf.d\/\*\.conf;/include \/etc\/nginx\/sites-enabled\/\*\.conf;/g' /etc/nginx/nginx.conf
-
-
-
 
 ## SYSCTL ##
 cat > 98-mem-tuning.conf <<EO_CONF
@@ -116,11 +112,7 @@ EO_CONF
 mv 98-mem-tuning.conf 99-network-tuning.conf /etc/sysctl.d/
 /sbin/sysctl -p /etc/sysctl.d/98-mem-tuning.conf
 /sbin/sysctl -p /etc/sysctl.d/99-network-tuning.conf
-sudo sed -i "s/exit 0/sysctl -p\nexit 0/g" /etc/rc.local
-
-
-
-
+sed -i "s/exit 0/sysctl -p\nexit 0/g" /etc/rc.local
 
 ## VIMRC ##
 cat > vimrc <<EO_CONF
