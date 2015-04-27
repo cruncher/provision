@@ -152,6 +152,7 @@ sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/g' /etc/ssh/sshd
 cd
 curl -OL https://raw.github.com/cruncher/provision/jessie/user_add.sh
 curl -OL https://raw.githubusercontent.com/cruncher/provision/jessie/duplicity.sh
+chmod +x user_add.sh duplicity.sh
 
 cd
 mkdir -p .ssh
@@ -160,5 +161,5 @@ curl -L https://github.com/mbi.keys >> .ssh/authorized_keys
 
 clear
 echo "all done."
+hash -r
 ls
-
