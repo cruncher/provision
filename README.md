@@ -1,4 +1,4 @@
-Quick and dirty provisioning script, will install the following on a bare Debian wheezy:
+Quick and dirty provisioning script, will install the following on a bare Debian Jessie:
 
 * nginx
 * supervisor (with rc.d init scripts)
@@ -10,6 +10,5 @@ Quick and dirty provisioning script, will install the following on a bare Debian
 
 Usage:
 
-    sh -c "`wget -O - https://raw.githubusercontent.com/cruncher/provision/wheezy-no-postgis/provision.sh`"
+    sh -c "`wget -O - https://raw.githubusercontent.com/cruncher/provision/jessie/provision.sh`"
 
-    
