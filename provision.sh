@@ -150,7 +150,7 @@ sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/g' /etc/ssh/sshd
 /etc/init.d/ssh restart
 
 cd
-curl -OL https://raw.github.com/cruncher/provision/master/user_add.sh
+curl -OL https://raw.github.com/cruncher/provision/jessie/user_add.sh
 curl -OL https://raw.githubusercontent.com/cruncher/provision/jessie/duplicity.sh
 
 cd
