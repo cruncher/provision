@@ -43,6 +43,7 @@ apt-get purge
 apt-get -y  install nginx postgresql postgresql-client postgresql-contrib libpq-dev postgis postgresql-9.4-postgis gdal-contrib gdal-bin mcelog apt-dater-host debian-goodies
 apt-get -y  install memcached libjpeg-dev libfreetype6-dev python-dev python-virtualenv python-pip git-core screen zsh vim gettext duplicity ncftp shorewall unzip ncurses-dev
 apt-get -y  install nodejs
+/usr/bin/npm install clean-css
 
 ln -s /usr/lib/x86_64-linux-gnu/libjpeg.so /usr/lib
 ln -s /usr/lib/x86_64-linux-gnu/libfreetype.so /usr/lib
