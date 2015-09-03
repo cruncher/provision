@@ -2,8 +2,11 @@
 
 DISTRIB=jessie
 
-read -p "update sources.list? (y/n)? " yn
-if [ "$yn" = "y" ]; then
+read -p "update sources.list? (y/n)? " yn_sources
+read -p "create swap? (y/n)? " yn_swap
+read -p "launch firewall? (y/n)? " yn_fw
+
+if [ "yn_sources" = "y" ]; then
   apt-get -y update
   apt-get -y install netselect-apt
   /usr/bin/netselect-apt -n $DISTRIB -o sources.list
@@ -14,8 +17,7 @@ if [ "$yn" = "y" ]; then
 fi
 
 # swap
-read -p "create swap? (y/n)? " yn
-if [ "$yn" = "y" ]; then
+if [ "yn_swap" = "y" ]; then
   dd if=/dev/zero of=/swapfile bs=1024 count=1M
   mkswap /swapfile
   swapon /swapfile
@@ -140,15 +142,18 @@ mv vimrc /etc/vim/vimrc
 # skel content
 cd /etc/skel/
 curl -L https://raw.githubusercontent.com/cruncher/provision/jessie/dl/skel.tar.gz | tar xvfz -
-cd
-# base stuff
-curl -OL https://raw.githubusercontent.com/cruncher/provision/jessie/dl/shorewall.zip
 
-cd /etc/
-unzip /root/shorewall.zip
-sed -i 's/startup=0/startup=1/g' /etc/default/shorewall
-/etc/init.d/shorewall start
-rm /root/shorewall.zip
+# base stuff
+if [ "$yn_fw" = "y" ]; then
+  cd
+  curl -OL https://raw.githubusercontent.com/cruncher/provision/jessie/dl/shorewall.zip
+  cd /etc/
+  unzip /root/shorewall.zip
+  sed -i 's/startup=0/startup=1/g' /etc/default/shorewall
+  /etc/init.d/shorewall start
+  rm /root/shorewall.zip
+fi
+
 
 sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/g' /etc/ssh/sshd_config
 /etc/init.d/ssh restart
