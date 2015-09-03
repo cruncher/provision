@@ -1,13 +1,18 @@
 #!/bin/bash
 
 DISTRIB=jessie
+LC_ALL="en_US.UTF-8"
+LANG="en_US.UTF-8"
+
+echo 'export LC_ALL="en_US.UTF-8"' >> /etc/profile
+echo 'export LANG="en_US.UTF-8"' >> /etc/profile
 
 read -p "update sources.list? (y/n)? " yn_sources
 read -p "create swap? (y/n)? " yn_swap
 read -p "launch firewall? (y/n)? " yn_fw
 
 if [ "yn_sources" = "y" ]; then
-  apt-get -y update
+  apt-get -y updatemy
   apt-get -y install netselect-apt
   /usr/bin/netselect-apt -n $DISTRIB -o sources.list
   sed -i 's/# deb http:\/\/security.debian.org/deb http:\/\/security.debian.org/g' sources.list
@@ -36,34 +41,13 @@ curl -sL https://deb.nodesource.com/setup_0.12 | bash -
 
 ## SYSCTL ##
 
-
-#cat > 99-network-tuning.conf <<EO_CONF
-#net.ipv4.ip_local_port_range=1024 65000
-#net.ipv4.tcp_tw_reuse=1
-#net.ipv4.tcp_fin_timeout=15
-#net.core.netdev_max_backlog=4096
-#net.core.rmem_max=16777216
-#net.core.somaxconn=4096
-#net.core.wmem_max=16777216
-#net.ipv4.tcp_max_tw_buckets=400000
-#net.ipv4.tcp_no_metrics_save=1
-##net.ipv4.tcp_max_syn_backlog=20480
-#net.ipv4.tcp_rmem=4096 87380 16777216
-#net.ipv4.tcp_syn_retries=2
-#net.ipv4.tcp_synack_retries=2
-#net.ipv4.tcp_wmem=4096 65536 16777216
-#vm.min_free_kbytes=65536
-#EO_CONF
-cat > 98-mem-tuning.conf <<EO_CONF
-kernel.shmmax=8589934592
-kernel.shmall=2097152
-EO_CONF
-
-mv 98-mem-tuning.conf /etc/sysctl.d/
-/sbin/sysctl -p /etc/sysctl.d/98-mem-tuning.conf
-# /sbin/sysctl -p /etc/sysctl.d/99-network-tuning.conf
-sed -i "s/exit 0/sysctl -p\nexit 0/g" /etc/rc.local
-
+page_size=`getconf PAGE_SIZE`
+phys_pages=`getconf _PHYS_PAGES`
+shmall=`expr $phys_pages / 2`
+shmmax=`expr $shmall \* $page_size`
+echo "kernel.shmmax = $shmmax" >> /etc/sysctl.conf
+echo "kernel.shmall = $shmall" >> /etc/sysctl.conf
+sysctl -p
 
 echo "Cmnd_Alias PROJECT_CMND = /usr/local/bin/supervisorctl status*, /usr/local/bin/supervisorctl restart*, /etc/init.d/nginx reload*" >> /etc/sudoers
 echo "# xxx ALL=(root) NOPASSWD: PROJECT_CMND" >> /etc/sudoers
