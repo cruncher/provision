@@ -40,7 +40,8 @@ apt-get remove  -y --purge libapache2-mod-php5 apache2 libapache2-mod-php5filter
 apt-get autoremove  -y
 apt-get purge
 
-apt-get -y  install nginx postgresql postgresql-client postgresql-contrib libpq-dev postgis postgresql-9.4-postgis gdal-contrib gdal-bin mcelog apt-dater-host debian-goodies
+apt-get -y  install nginx postgresql postgresql-client postgresql-contrib libpq-dev postgis postgresql-9.4-postgis gdal-contrib gdal-bin apt-dater-host debian-goodies
+apt-get -y  install mcelog
 apt-get -y  install memcached libjpeg-dev libfreetype6-dev python-dev python-virtualenv python-pip git-core screen zsh vim gettext duplicity ncftp shorewall unzip ncurses-dev
 apt-get -y  install nodejs
 /usr/bin/npm install -g clean-css
