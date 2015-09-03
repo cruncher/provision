@@ -123,34 +123,6 @@ update-rc.d supervisord defaults
 /etc/init.d/supervisord start
 /etc/init.d/nginx stop
 
-## SYSCTL ##
-cat > 98-mem-tuning.conf <<EO_CONF
-kernel.shmmax=8589934592
-kernel.shmall=2097152
-EO_CONF
-
-cat > 99-network-tuning.conf <<EO_CONF
-net.ipv4.ip_local_port_range=1024 65000
-net.ipv4.tcp_tw_reuse=1
-net.ipv4.tcp_fin_timeout=15
-net.core.netdev_max_backlog=4096
-net.core.rmem_max=16777216
-net.core.somaxconn=4096
-net.core.wmem_max=16777216
-net.ipv4.tcp_max_syn_backlog=20480
-net.ipv4.tcp_max_tw_buckets=400000
-net.ipv4.tcp_no_metrics_save=1
-net.ipv4.tcp_rmem=4096 87380 16777216
-net.ipv4.tcp_syn_retries=2
-net.ipv4.tcp_synack_retries=2
-net.ipv4.tcp_wmem=4096 65536 16777216
-vm.min_free_kbytes=65536
-EO_CONF
-
-mv 98-mem-tuning.conf 99-network-tuning.conf /etc/sysctl.d/
-/sbin/sysctl -p /etc/sysctl.d/98-mem-tuning.conf
-/sbin/sysctl -p /etc/sysctl.d/99-network-tuning.conf
-sed -i "s/exit 0/sysctl -p\nexit 0/g" /etc/rc.local
 
 ## VIMRC ##
 cat > vimrc <<EO_CONF
