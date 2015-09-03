@@ -3,9 +3,11 @@
 DISTRIB=jessie
 LC_ALL="en_US.UTF-8"
 LANG="en_US.UTF-8"
+LC_MESSAGES="en_US.UTF-8"
 
 echo 'export LC_ALL="en_US.UTF-8"' >> /etc/profile
 echo 'export LANG="en_US.UTF-8"' >> /etc/profile
+echo 'export LC_MESSAGES="en_US.UTF-8"' >> /etc/profile
 
 read -p "update sources.list? (y/n)? " yn_sources
 read -p "create swap? (y/n)? " yn_swap
@@ -58,15 +60,19 @@ apt-get remove  -y --purge libapache2-mod-php5 apache2 libapache2-mod-php5filter
 apt-get autoremove  -y
 apt-get purge
 
-apt-get -y  install nginx postgresql postgresql-client postgresql-contrib libpq-dev postgis postgresql-9.4-postgis gdal-contrib gdal-bin apt-dater-host debian-goodies
+apt-get -y  install nginx postgresql postgresql-client postgresql-contrib libpq-dev postgis gdal-contrib gdal-bin apt-dater-host debian-goodies
 apt-get -y  install mcelog
 apt-get -y  install memcached libjpeg-dev libfreetype6-dev python-dev python-virtualenv python-pip git-core screen zsh vim gettext duplicity ncftp shorewall unzip ncurses-dev
 apt-get -y  install nodejs
 /usr/bin/npm install -g clean-css
 
-ln -s /usr/lib/x86_64-linux-gnu/libjpeg.so /usr/lib
-ln -s /usr/lib/x86_64-linux-gnu/libfreetype.so /usr/lib
-ln -s /usr/lib/x86_64-linux-gnu/libz.so /usr/lib
+# had to manually do these in one occasion
+pg_createcluster 9.4 main
+pg_ctlcluster 9.4 main start
+
+# ln -s /usr/lib/x86_64-linux-gnu/libjpeg.so /usr/lib
+# ln -s /usr/lib/x86_64-linux-gnu/libfreetype.so /usr/lib
+# ln -s /usr/lib/x86_64-linux-gnu/libz.so /usr/lib
 
 
 ## SUPERVISORD ##
