@@ -67,6 +67,7 @@ apt-get -y  install mcelog
 apt-get -y  install memcached libjpeg-dev libfreetype6-dev python-dev python-virtualenv python-pip git-core screen zsh vim gettext duplicity ncftp shorewall unzip ncurses-dev
 apt-get -y  install nodejs
 /usr/bin/npm install -g clean-css
+mkdir /var/log/duplicity
 
 # had to manually do these in one occasion
 pg_createcluster 9.4 main
