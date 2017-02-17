@@ -62,7 +62,7 @@ apt-get remove  -y --purge libapache2-mod-php5 apache2 libapache2-mod-php5filter
 apt-get autoremove  -y
 apt-get purge
 
-apt-get -y  install nginx postgresql postgresql-client postgresql-contrib libpq-dev postgis gdal-contrib gdal-bin apt-dater-host debian-goodies
+apt-get -y  install nginx postgresql postgresql-client postgresql-contrib libpq-dev postgis gdal-contrib gdal-bin apt-dater-host debian-goodies libffi-dev
 apt-get -y  install mcelog 
 apt-get -y  install librsync-dev lftp
 apt-get -y  install memcached libjpeg-dev libfreetype6-dev python-dev python3-dev python-virtualenv python-pip python3-pip git-core screen zsh vim gettext ncftp shorewall unzip ncurses-dev
