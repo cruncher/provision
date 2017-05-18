@@ -68,7 +68,7 @@ apt-get -y  install mcelog
 apt-get -y  install librsync-dev lftp
 apt-get -y  install memcached libjpeg-dev libfreetype6-dev python-dev python3-dev python-virtualenv python-pip git-core screen zsh vim gettext ncftp shorewall unzip ncurses-dev
 apt-get -y  install nodejs
-/usr/bin/npm install -g clean-css
+/usr/bin/npm install -g clean-css-cli
 mkdir /var/log/duplicity
 pip install lockfile
 
