@@ -1,7 +1,7 @@
 #!/bin/bash
 
 export DEBIAN_FRONTEND=noninteractive
-DISTRIB=jessie
+DISTRIB=stretch
 LC_ALL="en_US.UTF-8"
 LANG="en_US.UTF-8"
 LC_MESSAGES="en_US.UTF-8"
@@ -15,7 +15,7 @@ read -p "create swap? (y/n)? " yn_swap
 read -p "launch firewall? (y/n)? " yn_fw
 
 if [ "yn_sources" = "y" ]; then
-  apt-get -y updatemy
+  apt-get -y update
   apt-get -y install netselect-apt
   /usr/bin/netselect-apt -n $DISTRIB -o sources.list
   sed -i 's/# deb http:\/\/security.debian.org/deb http:\/\/security.debian.org/g' sources.list
@@ -58,12 +58,12 @@ echo "# xxx ALL=(root) NOPASSWD: PROJECT_CMND" >> /etc/sudoers
 echo "# mbi ALL=NOPASSWD: /usr/bin/apt-get, /usr/bin/aptitude" >> /etc/sudoers
 
 # Remove apache
-apt-get remove  -y --purge libapache2-mod-php5 apache2 libapache2-mod-php5filter php5 mysql-common libmysqlclient18
+apt-get remove  -y --purge libapache2-mod-php apache2  php mysql-common libmysqlclient18
 apt-get autoremove  -y
 apt-get purge
 
-apt-get -y  install apt-get install build-essential
-apt-get -y  install nginx postgresql postgresql-client postgresql-contrib libpq-dev postgis gdal-contrib gdal-bin apt-dater-host debian-goodies libffi-dev
+apt-get -y  install build-essential
+apt-get -y  install nginx postgresql postgresql-client postgresql-contrib  apt-dater-host debian-goodies libffi-dev
 apt-get -y  install mcelog 
 apt-get -y  install librsync-dev lftp
 apt-get -y  install memcached libjpeg-dev libfreetype6-dev python-dev python3-dev python-virtualenv python-pip git-core screen zsh vim gettext ncftp shorewall unzip ncurses-dev
@@ -73,8 +73,8 @@ mkdir /var/log/duplicity
 pip install lockfile
 
 # had to manually do these in one occasion
-pg_createcluster 9.4 main
-pg_ctlcluster 9.4 main start
+#pg_createcluster 9.4 main
+#pg_ctlcluster 9.4 main start
 
 # ln -s /usr/lib/x86_64-linux-gnu/libjpeg.so /usr/lib
 # ln -s /usr/lib/x86_64-linux-gnu/libfreetype.so /usr/lib
@@ -154,9 +154,43 @@ if [ "$yn_fw" = "y" ]; then
   rm /root/shorewall.zip
 fi
 
-
-sed -i 's/PasswordAuthentication yes/PasswordAuthentication no/g' /etc/ssh/sshd_config
-/etc/init.d/ssh restart
+# SSHD conf from https://wiki.mozilla.org/Security/Guidelines/OpenSSH
+cat > sshdconf <<EO_CONF
+# Supported HostKey algorithms by order of preference.
+HostKey /etc/ssh/ssh_host_ed25519_key
+HostKey /etc/ssh/ssh_host_rsa_key
+HostKey /etc/ssh/ssh_host_ecdsa_key
+ 
+KexAlgorithms curve25519-sha256@libssh.org,ecdh-sha2-nistp521,ecdh-sha2-nistp384,ecdh-sha2-nistp256,diffie-hellman-group-exchange-sha256
+ 
+Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr
+ 
+MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,umac-128@openssh.com
+ 
+# Password based logins are disabled - only public key based logins are allowed.
+AuthenticationMethods publickey
+ 
+# LogLevel VERBOSE logs user's key fingerprint on login. Needed to have a clear audit track of which key was using to log in.
+LogLevel VERBOSE
+ 
+# Log sftp level file access (read/write/etc.) that would not be easily logged otherwise.
+Subsystem sftp  /usr/lib/ssh/sftp-server -f AUTHPRIV -l INFO
+ 
+# Root login is not allowed for auditing reasons. This is because it's difficult to track which process belongs to which root user:
+#
+# On Linux, user sessions are tracking using a kernel-side session id, however, this session id is not recorded by OpenSSH.
+# Additionally, only tools such as systemd and auditd record the process session id.
+# On other OSes, the user session id is not necessarily recorded at all kernel-side.
+# Using regular users in combination with /bin/su or /usr/bin/sudo ensure a clear audit track.
+PermitRootLogin No
+ 
+# Use kernel sandbox mechanisms where possible in unprivileged processes
+# Systrace on OpenBSD, Seccomp on Linux, seatbelt on MacOSX/Darwin, rlimit elsewhere.
+UsePrivilegeSeparation sandbox
+EO_CONF
+mv /etc/ssh/sshd_config /etc/ssh/sshd_config.orig
+mv sshdconf /etc/ssh/sshd_config
+/etc/init.d/ssh try-restart
 
 cd
 curl -OL https://raw.github.com/cruncher/provision/jessie/user_add.sh
