@@ -1,4 +1,4 @@
-Quick and dirty provisioning script, will install the following on a bare Debian Jessie:
+Quick and dirty provisioning script, will install the following on a bare Debian Stretch:
 
 * nginx
 * supervisor (with rc.d init scripts)
