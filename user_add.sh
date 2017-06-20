@@ -3,6 +3,7 @@ read -p "username? " username
 mkdir -p /home/projects
 if [ ! -d "/home/projects/$username" ]; then
         useradd -b /home/projects -m -s /bin/zsh $username
+        usermod -p '*' $username
         su -c "ssh-keygen -q -N '' -t rsa -f /home/projects/$username/.ssh/id_rsa" - $username
         su -c "git config --global user.name '$username deploy server'" - $username
         su -c "git config --global user.email 'info@cruncher.ch'" - $username
