@@ -141,12 +141,12 @@ mv vimrc /etc/vim/vimrc
 
 # skel content
 cd /etc/skel/
-curl -L https://raw.githubusercontent.com/cruncher/provision/jessie/dl/skel.tar.gz | tar xvfz -
+curl -L https://raw.githubusercontent.com/cruncher/provision/stretch/dl/skel.tar.gz | tar xvfz -
 
 # base stuff
 if [ "$yn_fw" = "y" ]; then
   cd
-  curl -OL https://raw.githubusercontent.com/cruncher/provision/jessie/dl/shorewall.zip
+  curl -OL https://raw.githubusercontent.com/cruncher/provision/stretch/dl/shorewall.zip
   cd /etc/
   unzip /root/shorewall.zip
   sed -i 's/startup=0/startup=1/g' /etc/default/shorewall
