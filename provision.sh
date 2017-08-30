@@ -27,12 +27,12 @@ fi
 # swap
 if [ "yn_swap" = "y" ]; then
   dd if=/dev/zero of=/swapfile bs=1024 count=1M
+  chmod 0600 /swapfile
   mkswap /swapfile
   swapon /swapfile
   echo " /swapfile       none    swap    sw      0       0" >> /etc/fstab
   echo 10 | sudo tee /proc/sys/vm/swappiness
   echo vm.swappiness = 10 | sudo tee -a /etc/sysctl.conf
-  chmod 0600 /swapfile
 fi
 
 apt-get -y update
