@@ -138,6 +138,7 @@ endif
 EO_CONF
 mv /etc/vim/vimrc /etc/vim/vimrc.bckup
 mv vimrc /etc/vim/vimrc
+update-alternatives --set editor /usr/bin/vim.basic
 
 # skel content
 cd /etc/skel/
