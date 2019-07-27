@@ -65,7 +65,7 @@ apt-get purge
 
 apt-get -y  install build-essential
 apt-get -y  install nginx postgresql postgresql-client postgresql-contrib  apt-dater-host debian-goodies libffi-dev libssl-dev ntp
-apt-get -y  install mcelog 
+# apt-get -y  install mcelog 
 pg_ctlcluster 11 main start
     
 # Pyenv:
