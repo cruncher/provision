@@ -1,7 +1,7 @@
 #!/bin/bash
 
 export DEBIAN_FRONTEND=noninteractive
-DISTRIB=stretch
+DISTRIB=buster
 LC_ALL="en_US.UTF-8"
 LANG="en_US.UTF-8"
 LC_MESSAGES="en_US.UTF-8"
