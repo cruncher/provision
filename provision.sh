@@ -71,19 +71,13 @@ pg_ctlcluster 11 main start
 # Pyenv:
 apt-get -y  install make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev python-openssl git
 apt-get -y  install librsync-dev lftp
-apt-get -y  install memcached libjpeg-dev libfreetype6-dev python-dev python3-dev python-virtualenv python-pip git-core screen zsh vim gettext ncftp shorewall unzip ncurses-dev
+apt-get -y  install memcached libjpeg-dev libfreetype6-dev python-dev python3-dev python-virtualenv python-pip python3-pip git-core screen zsh vim gettext ncftp shorewall unzip ncurses-dev
 apt-get -y  install nodejs
 /usr/bin/npm install -g clean-css-cli
 mkdir /var/log/duplicity
-pip install lockfile
-
-# had to manually do these in one occasion
-#pg_createcluster 9.4 main
-#pg_ctlcluster 9.4 main start
-
-# ln -s /usr/lib/x86_64-linux-gnu/libjpeg.so /usr/lib
-# ln -s /usr/lib/x86_64-linux-gnu/libfreetype.so /usr/lib
-# ln -s /usr/lib/x86_64-linux-gnu/libz.so /usr/lib
+pip install --upgrade pip virtualenv
+pip3 install --upgrade pip virtualenv
+pip install lockfile fasteners
 
 
 ## SUPERVISORD ##
@@ -211,14 +205,15 @@ curl -L https://github.com/mbi.keys >> .ssh/authorized_keys
 cd
 mkdir tmp
 cd tmp
-wget https://code.launchpad.net/duplicity/0.7-series/0.7.10/+download/duplicity-0.7.10.tar.gz
-tar xvfz duplicity-0.7.10.tar.gz
-cd duplicity-0.7.10
+wget https://code.launchpad.net/duplicity/0.7-series/0.7.19/+download/duplicity-0.7.19.tar.gz
+tar xvfz duplicity-0.7.19.tar.gz
+cd duplicity-0.7.19
 python setup.py build
 python setup.py install
+duplicity --version
 cd
 
-clear
+# clear
 echo "all done."
 hash -r
 ls
