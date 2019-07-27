@@ -64,8 +64,10 @@ apt-get autoremove  -y
 apt-get purge
 
 apt-get -y  install build-essential
-apt-get -y  install nginx postgresql postgresql-client postgresql-contrib  apt-dater-host debian-goodies libffi-dev libssl-dev ntpd
+apt-get -y  install nginx postgresql postgresql-client postgresql-contrib  apt-dater-host debian-goodies libffi-dev libssl-dev ntp
 apt-get -y  install mcelog 
+pg_ctlcluster 11 main start
+    
 # Pyenv:
 apt-get -y  install sudo apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev python-openssl git
 apt-get -y  install librsync-dev lftp
