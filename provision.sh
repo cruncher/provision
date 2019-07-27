@@ -199,7 +199,7 @@ mv sshdconf /etc/ssh/sshd_config
 /etc/init.d/ssh try-restart
 
 cd
-curl -OL https://raw.github.com/cruncher/provision/stretch/user_add.sh
+curl -OL https://raw.github.com/cruncher/provision/buster/user_add.sh
 curl -OL https://raw.githubusercontent.com/cruncher/provision/stretch/duplicity.sh
 chmod +x user_add.sh duplicity.sh
 
