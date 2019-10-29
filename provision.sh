@@ -75,9 +75,9 @@ apt-get -y  install memcached libjpeg-dev libfreetype6-dev python-dev python3-de
 apt-get -y  install nodejs
 /usr/bin/npm install -g clean-css-cli
 mkdir /var/log/duplicity
-pip install --upgrade pip virtualenv
+pip install --upgrade pip virtualenv 
 pip3 install --upgrade pip virtualenv
-pip install lockfile fasteners
+pip install lockfile fasteners fasteners
 
 apt-get -y install apt-transport-https ca-certificates curl gnupg2  software-properties-common
 curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
