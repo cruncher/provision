@@ -147,12 +147,12 @@ update-alternatives --set editor /usr/bin/vim.basic
 
 # skel content
 cd /etc/skel/
-curl -L https://raw.githubusercontent.com/cruncher/provision/stretch/dl/skel.tar.gz | tar xvfz -
+curl -L https://raw.githubusercontent.com/cruncher/provision/buster/dl/skel.tar.gz | tar xvfz -
 
 # base stuff
 if [ "$yn_fw" = "y" ]; then
   cd
-  curl -OL https://raw.githubusercontent.com/cruncher/provision/stretch/dl/shorewall.zip
+  curl -OL https://raw.githubusercontent.com/cruncher/provision/buster/dl/shorewall.zip
   cd /etc/
   unzip /root/shorewall.zip
   sed -i 's/startup=0/startup=1/g' /etc/default/shorewall
