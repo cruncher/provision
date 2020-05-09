@@ -69,7 +69,7 @@ apt-get -y  install nginx postgresql postgresql-client postgresql-contrib  apt-d
 pg_ctlcluster 11 main start
     
 # Pyenv:
-apt-get -y  install make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev python-openssl git
+apt-get -y  install make build-essential fail2ban libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev python-openssl git
 apt-get -y  install librsync-dev lftp rsync
 apt-get -y  install memcached libjpeg-dev libfreetype6-dev python-dev python3-dev python-virtualenv python3-venv python-pip python3-pip git-core screen zsh vim gettext ncftp shorewall unzip ncurses-dev
 apt-get -y  install nodejs
