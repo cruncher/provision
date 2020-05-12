@@ -73,6 +73,8 @@ apt-get -y  install make build-essential fail2ban libssl-dev zlib1g-dev libbz2-d
 apt-get -y  install librsync-dev lftp rsync
 apt-get -y  install memcached libjpeg-dev libfreetype6-dev python-dev python3-dev python-virtualenv python3-venv python-pip python3-pip git-core screen zsh vim gettext ncftp shorewall unzip ncurses-dev
 apt-get -y  install nodejs
+apt-get -y  install certbot python-certbot-nginx
+
 /usr/bin/npm install -g clean-css-cli
 mkdir /var/log/duplicity
 pip install --upgrade pip virtualenv 
