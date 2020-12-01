@@ -2,7 +2,7 @@
 read -p "username? " username
 mkdir -p /home/projects
 if [ ! -d "/home/projects/$username" ]; then
-        useradd -b /home/projects -m -s /bin/zsh $username
+        useradd -b /home/projects -m -s /bin/bash $username
         usermod -p '*' $username
         usermod -aG docker $username
         su -c "ssh-keygen -q -N '' -t rsa -f /home/projects/$username/.ssh/id_rsa" - $username
