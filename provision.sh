@@ -59,71 +59,32 @@ echo "# xxx ALL=(root) NOPASSWD: PROJECT_CMND" >> /etc/sudoers
 echo "# mbi ALL=NOPASSWD: /usr/bin/apt-get, /usr/bin/aptitude" >> /etc/sudoers
 
 # Remove apache
-apt-get remove  -y --purge libapache2-mod-php apache2  php mysql-common libmysqlclient18
+apt-get remove  -y --purge libapache2-mod-php apache2  php mysql-common
 apt-get autoremove  -y
 apt-get purge
 
 apt-get -y  install build-essential
-apt-get -y  install nginx postgresql postgresql-client postgresql-contrib  apt-dater-host debian-goodies libffi-dev libssl-dev ntp
+apt-get -y  install nginx postgresql postgresql-client postgresql-contrib  apt-dater-host debian-goodies libffi-dev libssl-dev ntp supervisor
 # apt-get -y  install mcelog 
-pg_ctlcluster 11 main start
+pg_ctlcluster 13 main start
     
 # Pyenv:
-apt-get -y  install make build-essential fail2ban libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev python-openssl git
-apt-get -y  install librsync-dev lftp rsync
-apt-get -y  install memcached libjpeg-dev libfreetype6-dev python-dev python3-dev python-virtualenv python3-venv python-pip python3-pip git-core screen zsh vim gettext ncftp shorewall unzip ncurses-dev
+apt-get -y  install make fail2ban libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev  git
+apt-get -y  install librsync-dev lftp rsync duplicity
+apt-get -y  install memcached libjpeg-dev libfreetype6-dev python-dev python3-dev python3-venv python3-pip git-core screen zsh vim gettext ncftp unzip ncurses-dev
 apt-get -y  install nodejs
-apt-get -y  install certbot python-certbot-nginx
+apt-get -y  install certbot python3-certbot-nginx
 
 /usr/bin/npm install -g clean-css-cli
 mkdir /var/log/duplicity
-pip install --upgrade pip virtualenv 
-pip3 install --upgrade pip virtualenv
-pip install lockfile fasteners fasteners
 
 apt-get -y install apt-transport-https ca-certificates curl gnupg2  software-properties-common
-curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
-sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
-apt-get -y update
-sudo apt-get -y install docker-ce docker-ce-cli containerd.io
+# curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
+# sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
+# apt-get -y update
+# sudo apt-get -y install docker-ce docker-ce-cli containerd.io
+apt-get -y install docker docker-compose
 
-
-## SUPERVISORD ##
-pip install supervisor
-mkdir /etc/supervisord.d
-
-cat > supervisord.conf <<EO_CONF
-[unix_http_server]
-file=/var/tmp/supervisor.sock   ; (the path to the socket file)
-[supervisord]
-logfile=/var/log/supervisord.log ; (main log file;default $CWD/supervisord.log)
-logfile_maxbytes=50MB        ; (max main logfile bytes b4 rotation;default 50MB)
-logfile_backups=10           ; (num of main logfile rotation backups;default 10)
-loglevel=info                ; (log level;default info; others: debug,warn,trace)
-pidfile=/var/run/supervisord.pid ; (supervisord pidfile;default supervisord.pid)
-nodaemon=false               ; (start in foreground if true;default false)
-minfds=1024                  ; (min. avail startup file descriptors;default 1024)
-minprocs=200                 ; (min. avail process descriptors;default 200)
-environment=LANG=en_US.UTF-8, LC_ALL=en_US.UTF-8, LC_LANG=en_US.UTF-8
-[rpcinterface:supervisor]
-supervisor.rpcinterface_factory = supervisor.rpcinterface:make_main_rpcinterface
-[supervisorctl]
-serverurl=unix:///var/tmp/supervisor.sock ; use a unix:// URL  for a unix socket
-[include]
-files = /etc/supervisord.d/*.conf
-EO_CONF
-mv supervisord.conf /etc
-
-wget --no-check-certificate https://raw.github.com/Supervisor/initscripts/master/debian-norrgard
-sed -i 's/DAEMON=\/usr\/bin/DAEMON=\/usr\/local\/bin/g' debian-norrgard
-sed -i 's/SUPERVISORCTL=\/usr\/bin/SUPERVISORCTL=\/usr\/local\/bin/g' debian-norrgard
-sed -i 's/DAEMON_ARGS="--pidfile \${PIDFILE}"/DAEMON_ARGS="--pidfile \${PIDFILE} -c \/etc\/supervisord.conf"/g' debian-norrgard
-sed -i 's/# server_names_hash_bucket_size 64/server_names_hash_bucket_size 64/g' /etc/nginx/nginx.conf
-rm /etc/nginx/sites-enabled/default
-mv debian-norrgard /etc/init.d/supervisord
-chmod +x /etc/init.d/supervisord
-update-rc.d supervisord defaults
-/etc/init.d/supervisord start
 /etc/init.d/nginx stop
 
 
@@ -163,6 +124,7 @@ if [ "$yn_fw" = "y" ]; then
 fi
 
 # SSHD conf from https://wiki.mozilla.org/Security/Guidelines/OpenSSH
+cd
 cat > sshdconf <<EO_CONF
 # Supported HostKey algorithms by order of preference.
 HostKey /etc/ssh/ssh_host_ed25519_key
@@ -201,8 +163,8 @@ mv sshdconf /etc/ssh/sshd_config
 /etc/init.d/ssh try-restart
 
 cd
-curl -OL https://raw.github.com/cruncher/provision/buster/user_add.sh
-curl -OL https://raw.githubusercontent.com/cruncher/provision/stretch/duplicity.sh
+curl -OL https://raw.github.com/cruncher/provision/bullseye/user_add.sh
+curl -OL https://raw.githubusercontent.com/cruncher/provision/bullseye/duplicity.sh
 chmod +x user_add.sh duplicity.sh
 
 cd
@@ -210,16 +172,6 @@ mkdir -p .ssh
 touch .ssh/authorized_keys
 curl -L https://github.com/mbi.keys >> .ssh/authorized_keys
 
-cd
-mkdir tmp
-cd tmp
-wget https://code.launchpad.net/duplicity/0.7-series/0.7.19/+download/duplicity-0.7.19.tar.gz
-tar xvfz duplicity-0.7.19.tar.gz
-cd duplicity-0.7.19
-python setup.py build
-python setup.py install
-duplicity --version
-cd
 
 # clear
 echo "all done."
