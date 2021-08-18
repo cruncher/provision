@@ -164,8 +164,10 @@ mv sshdconf /etc/ssh/sshd_config
 
 cd
 curl -OL https://raw.github.com/cruncher/provision/bullseye/user_add.sh
-curl -OL https://raw.githubusercontent.com/cruncher/provision/bullseye/duplicity.sh
-chmod +x user_add.sh duplicity.sh
+chmod +x user_add.sh 
+
+cd
+git clone -b stable https://github.com/zertrin/duplicity-backup.sh.git duplicity-backup
 
 cd
 mkdir -p .ssh
