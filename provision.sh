@@ -54,7 +54,7 @@ echo "kernel.shmmax = $shmmax" >> /etc/sysctl.conf
 echo "kernel.shmall = $shmall" >> /etc/sysctl.conf
 sysctl -p
 
-echo "Cmnd_Alias PROJECT_CMND = /usr/local/bin/supervisorctl status*, /usr/local/bin/supervisorctl restart*, /etc/init.d/nginx reload*" >> /etc/sudoers
+echo "Cmnd_Alias PROJECT_CMND = /usr/bin/supervisorctl status*, /usr/bin/supervisorctl restart*, /etc/init.d/nginx reload*" >> /etc/sudoers
 echo "# xxx ALL=(root) NOPASSWD: PROJECT_CMND" >> /etc/sudoers
 echo "# mbi ALL=NOPASSWD: /usr/bin/apt-get, /usr/bin/aptitude" >> /etc/sudoers
 
