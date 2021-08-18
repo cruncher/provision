@@ -1,7 +1,7 @@
 #!/bin/bash
 
 export DEBIAN_FRONTEND=noninteractive
-DISTRIB=buster
+DISTRIB=bullseye
 LC_ALL="en_US.UTF-8"
 LANG="en_US.UTF-8"
 LC_MESSAGES="en_US.UTF-8"
