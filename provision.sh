@@ -168,9 +168,6 @@ curl -OL https://raw.github.com/cruncher/provision/bullseye/user_add.sh
 chmod +x user_add.sh 
 
 cd
-git clone -b stable https://github.com/zertrin/duplicity-backup.sh.git duplicity-backup
-
-cd
 mkdir -p .ssh
 touch .ssh/authorized_keys
 curl -L https://github.com/mbi.keys >> .ssh/authorized_keys
