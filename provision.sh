@@ -70,7 +70,7 @@ pg_ctlcluster 13 main start
     
 # Pyenv:
 apt-get -y  install make fail2ban libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev  git
-apt-get -y  install librsync-dev lftp rsync duplicity
+apt-get -y  install librsync-dev lftp rsync
 apt-get -y  install memcached libjpeg-dev libfreetype6-dev python-dev python3-dev python3-venv python3-pip git-core screen zsh vim gettext ncftp unzip ncurses-dev
 apt-get -y  install nodejs
 apt-get -y  install certbot python3-certbot-nginx
