@@ -74,6 +74,7 @@ apt-get -y  install librsync-dev lftp rsync duplicity
 apt-get -y  install memcached libjpeg-dev libfreetype6-dev python-dev python3-dev python3-venv python3-pip git-core screen zsh vim gettext ncftp unzip ncurses-dev
 apt-get -y  install nodejs
 apt-get -y  install certbot python3-certbot-nginx
+apt-get -y  install restic
 
 /usr/bin/npm install -g clean-css-cli
 mkdir /var/log/duplicity
