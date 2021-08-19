@@ -177,6 +177,9 @@ strings /dev/urandom | grep -o '[[:alnum:]]' | head -n 64 | tr -d '\n' > .restic
 chmod 400 .restic-password
 touch .restic-ignores
 
+curl -OL https://raw.githubusercontent.com/cruncher/provision/bullseye/backup.sh
+chmod +x backup.sh
+
 # clear
 echo "all done."
 hash -r
