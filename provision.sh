@@ -172,6 +172,9 @@ mkdir -p .ssh
 touch .ssh/authorized_keys
 curl -L https://github.com/mbi.keys >> .ssh/authorized_keys
 
+cd
+strings /dev/urandom | grep -o '[[:alnum:]]' | head -n 64 | tr -d '\n' > .restic-password
+
 
 # clear
 echo "all done."
