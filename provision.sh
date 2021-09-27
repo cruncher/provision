@@ -109,6 +109,8 @@ set incsearch           " Incremental search
 if filereadable("/etc/vim/vimrc.local")
   source /etc/vim/vimrc.local
 endif
+set mouse-=a
+
 EO_CONF
 mv /etc/vim/vimrc /etc/vim/vimrc.bckup
 mv vimrc /etc/vim/vimrc
