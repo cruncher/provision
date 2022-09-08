@@ -44,10 +44,7 @@ apt-get -y update
 apt-get -y upgrade
 apt-get -y dist-upgrade
 apt-get install -y sudo curl 
-# curl -sL https://deb.nodesource.com/setup_0.12 | bash -
-# curl -sL https://deb.nodesource.com/setup_5.x | bash -
-# curl -sL https://deb.nodesource.com/setup_7.x | bash -
-curl -sL https://deb.nodesource.com/setup_12.x | bash -
+curl -sL https://deb.nodesource.com/setup_18.x | bash -
 
 ## SYSCTL ##
 
