@@ -77,6 +77,7 @@ apt-get -y  install memcached libjpeg-dev libfreetype6-dev python-dev python3-de
 apt-get -y  install nodejs
 apt-get -y  install certbot python3-certbot-nginx
 apt-get -y  install restic
+apt-get -y  install bpytop
 
 /usr/bin/npm install -g clean-css-cli
 mkdir /var/log/duplicity
