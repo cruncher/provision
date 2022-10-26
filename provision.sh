@@ -17,7 +17,6 @@ echo 'export LC_MESSAGES="en_US.UTF-8"' >> /etc/profile
 
 read -p "update sources.list? (y/n)? " yn_sources
 read -p "create swap? (y/n)? " yn_swap
-read -p "launch firewall? (y/n)? " yn_fw
 
 if [ "yn_sources" = "y" ]; then
   apt-get -y update
@@ -116,18 +115,7 @@ update-alternatives --set editor /usr/bin/vim.basic
 
 # skel content
 cd /etc/skel/
-curl -L https://raw.githubusercontent.com/cruncher/provision/buster/dl/skel.tar.gz | tar xvfz -
-
-# base stuff
-if [ "$yn_fw" = "y" ]; then
-  cd
-  curl -OL https://raw.githubusercontent.com/cruncher/provision/buster/dl/shorewall.zip
-  cd /etc/
-  unzip /root/shorewall.zip
-  sed -i 's/startup=0/startup=1/g' /etc/default/shorewall
-  /etc/init.d/shorewall start
-  rm /root/shorewall.zip
-fi
+curl -L https://raw.githubusercontent.com/cruncher/provision/bullseye/dl/skel.tar.gz | tar xvfz -
 
 # SSHD conf from https://wiki.mozilla.org/Security/Guidelines/OpenSSH
 cd
