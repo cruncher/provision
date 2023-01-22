@@ -9,6 +9,7 @@ LOGFILE="/var/log/restic/`date +"%Y%m%d-%H%M%S"`.log"
 
 mkdir -p /var/log/restic
 touch $LOGFILE
+find /var/log/restic/ -type f -mtime 50 -delete
 
 /usr/bin/restic \
         --quiet --repo $REPO_URL \
