@@ -30,7 +30,7 @@ echo "Start: $(date)" >> $LOGFILE
 
 
 /usr/bin/restic \
-        forget --keep-last 45  --prune \
+        forget --keep-last 75  --prune \
         --password-file=/root/.restic-password \
         --repo $REPO_URL >> $LOGFILE 2>&1
 
