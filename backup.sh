@@ -36,7 +36,7 @@ echo "Start: $(date)" >> $LOGFILE
 
 /usr/bin/restic \
         --repo $REPO_URL \
-        backup / \
+        backup /home \
         --password-file=/root/.restic-password \
         --exclude-file=/root/.restic-ignores \
         --exclude=.venv --exclude=.pyenv --exclude="*.sock" \
