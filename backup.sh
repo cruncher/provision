@@ -3,15 +3,15 @@
 set -e
 
 # SFTP:
-REMOTE_USER="BACKUPUSER@BACKUPHOST"
-REPO_URL="sftp:$REMOTE_USER:backups/"
+#REMOTE_USER="BACKUPUSER@BACKUPHOST"
+#REPO_URL="sftp:$REMOTE_USER:backups/"
 
 # S3:
 # export AWS_ACCESS_KEY_ID="bucket-access-key"
 # export AWS_SECRET_ACCESS_KEY="bucket-secret"
 # REPO_URL="s3:sos-ch-gva-2.exo.io/bucket-name"
 
-CANARY_HASH = 'abcdef-02134-abcdef-02134'
+CANARY_HASH='abcdef-02134-abcdef-02134'
 LOGFILE="/var/log/restic/`date +"%Y%m%d-%H%M%S"`.log"
 
 mkdir -p /var/log/restic
