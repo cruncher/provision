@@ -23,6 +23,7 @@ touch $LOGFILE
 
 echo "Start: $(date)" >> $LOGFILE
 
+find /var/log/restic/ -mtime +45 -delete
 
 /usr/bin/restic \
         --quiet --repo $REPO_URL \
