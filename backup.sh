@@ -14,6 +14,10 @@ set -e
 CANARY_HASH='abcdef-02134-abcdef-02134'
 LOGFILE="/var/log/restic/`date +"%Y%m%d-%H%M%S"`.log"
 
+# strings /dev/urandom | grep -o '[[:alnum:]]' | head -n 64 | tr -d '\n' > .restic-password
+# chmod 400 .restic-password
+# touch .restic-ignores
+
 mkdir -p /var/log/restic
 touch $LOGFILE
 
