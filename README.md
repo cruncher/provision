@@ -10,5 +10,5 @@ Quick and dirty provisioning script, will install the following on a bare Debian
 
 Usage:
 
-    sh -c "`wget -O - https://raw.githubusercontent.com/cruncher/provision/bullseye/provision.sh`"
+    sh -c "`wget -O - https://raw.githubusercontent.com/cruncher/provision/bookworm/provision.sh`"
 
