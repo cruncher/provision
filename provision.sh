@@ -5,7 +5,7 @@ echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
 /usr/sbin/locale-gen
 
 export DEBIAN_FRONTEND=noninteractive
-DISTRIB=bullseye
+DISTRIB=bookworm
 LC_ALL="en_US.UTF-8"
 LANG="en_US.UTF-8"
 LC_MESSAGES="en_US.UTF-8"
@@ -115,7 +115,7 @@ update-alternatives --set editor /usr/bin/vim.basic
 
 # skel content
 cd /etc/skel/
-curl -L https://raw.githubusercontent.com/cruncher/provision/bullseye/dl/skel.tar.gz | tar xvfz -
+curl -L https://raw.githubusercontent.com/cruncher/provision/bookworm/dl/skel.tar.gz | tar xvfz -
 
 # SSHD conf from https://wiki.mozilla.org/Security/Guidelines/OpenSSH
 cd
@@ -154,7 +154,7 @@ mv sshdconf /etc/ssh/sshd_config
 /etc/init.d/ssh try-restart
 
 cd
-curl -OL https://raw.github.com/cruncher/provision/bullseye/user_add.sh
+curl -OL https://raw.github.com/cruncher/provision/bookworm/user_add.sh
 chmod +x user_add.sh 
 
 cd
@@ -167,7 +167,7 @@ strings /dev/urandom | grep -o '[[:alnum:]]' | head -n 64 | tr -d '\n' > .restic
 chmod 400 .restic-password
 touch .restic-ignores
 
-curl -OL https://raw.githubusercontent.com/cruncher/provision/bullseye/backup.sh
+curl -OL https://raw.githubusercontent.com/cruncher/provision/bookworm/backup.sh
 chmod +x backup.sh
 
 # clear
