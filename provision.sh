@@ -90,6 +90,8 @@ apt-get -y install docker docker-compose
 
 /etc/init.d/nginx stop
 rm -f /etc/nginx/sites-enabled/default
+systemctl enable nginx
+
 
 
 ## VIMRC ##
