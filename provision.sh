@@ -71,7 +71,7 @@ pg_ctlcluster 15 main start
     
 # Pyenv:
 apt-get -y  install make fail2ban libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev  git
-apt-get -y  install librsync-dev lftp rsync
+apt-get -y  install librsync-dev lftp rsync net-tools
 apt-get -y  install memcached libjpeg-dev libfreetype6-dev python3-dev python3-venv python3-pip git-core screen zsh vim gettext ncftp unzip ncurses-dev  ncurses-term
 apt-get -y  install nodejs
 apt-get -y  install certbot python3-certbot-nginx
@@ -89,6 +89,7 @@ apt-get -y install apt-transport-https ca-certificates curl gnupg2  software-pro
 apt-get -y install docker docker-compose
 
 /etc/init.d/nginx stop
+rm -f /etc/nginx/sites-enabled/default
 
 
 ## VIMRC ##
