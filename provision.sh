@@ -186,10 +186,28 @@ ExecStart=/usr/local/bin/node_exporter
 WantedBy=default.target
 EO_CONF
 
-sudo systemctl daemon-reload
-sudo systemctl start node_exporter
-sudo systemctl enable node_exporter
+systemctl daemon-reload
+systemctl start node_exporter
+systemctl enable node_exporter
 
+# Fix debian 12 fail2ban
+cat > /etc/fail2ban/jail.local <<EO_CONF
+[DEFAULT]
+# Debian 12 has no log files, just journalctl
+backend = systemd
+
+# "bantime" is the number of seconds that a host is banned.
+bantime  = 1h
+# "maxretry" is the number of failures before a host get banned.
+maxretry = 5
+# A host is banned if it has generated "maxretry" during the last "findtime"
+findtime  = 1h
+
+[sshd]
+enabled = true
+EO_CONF
+
+systemctl restart fail2ban.service
 
 
 cd
