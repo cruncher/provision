@@ -85,7 +85,7 @@ apt-get -y install apt-transport-https ca-certificates curl gnupg2  software-pro
 # sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
 # apt-get -y update
 # sudo apt-get -y install docker-ce docker-ce-cli containerd.io
-apt-get -y install docker docker-compose
+# apt-get -y install docker docker-compose
 
 /etc/init.d/nginx stop
 rm -f /etc/nginx/sites-enabled/default
