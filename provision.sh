@@ -159,6 +159,39 @@ mv /etc/ssh/sshd_config /etc/ssh/sshd_config.orig
 mv sshdconf /etc/ssh/sshd_config
 /etc/init.d/ssh try-restart
 
+# node exporter
+cd
+mkdir -p tmp_ne
+cd tmp_ne
+groupadd --system prometheus
+useradd -s /sbin/nologin --system -g prometheus prometheus
+curl -s https://api.github.com/repos/prometheus/node_exporter/releases/latest| grep browser_download_url|grep linux-amd64|cut -d '"' -f 4|wget -qi -
+tar -xvf node_exporter*.tar.gz
+cd  node_exporter*/
+cp node_exporter /usr/local/bin
+cd
+rm -rf tmp_ne
+
+cat >  /etc/systemd/system/node_exporter.service <<EO_CONF
+[Unit]
+Description=Node Exporter
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+User=prometheus
+ExecStart=/usr/local/bin/node_exporter
+
+[Install]
+WantedBy=default.target
+EO_CONF
+
+sudo systemctl daemon-reload
+sudo systemctl start node_exporter
+sudo systemctl enable node_exporter
+
+
+
 cd
 curl -OL https://raw.github.com/cruncher/provision/bookworm/user_add.sh
 chmod +x user_add.sh 
