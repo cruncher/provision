@@ -164,7 +164,6 @@ PubkeyAcceptedAlgorithms sk-ssh-ed25519-cert-v01@openssh.com,ssh-ed25519-cert-v0
 EO_CONF
 mv /etc/ssh/sshd_config /etc/ssh/sshd_config.orig
 mv sshdconf /etc/ssh/sshd_config
-/etc/init.d/ssh try-restart
 
 # sshd hardening from 
 # https://www.ssh-audit.com/hardening_guides.html#debian_12
@@ -173,6 +172,8 @@ ssh-keygen -t rsa -b 4096 -f /etc/ssh/ssh_host_rsa_key -N ""
 ssh-keygen -t ed25519 -f /etc/ssh/ssh_host_ed25519_key -N "" 
 awk '$5 >= 3071' /etc/ssh/moduli > /etc/ssh/moduli.safe
 mv /etc/ssh/moduli.safe /etc/ssh/moduli
+
+/etc/init.d/ssh try-restart
 
 
 
