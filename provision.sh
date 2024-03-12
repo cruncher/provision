@@ -64,7 +64,7 @@ apt-get autoremove  -y
 apt-get purge
 
 apt-get -y  install build-essential
-apt-get -y  install nginx postgresql postgresql-client postgresql-contrib  apt-dater-host debian-goodies libffi-dev libssl-dev ntp supervisor
+apt-get -y  install nginx postgresql postgresql-client postgresql-contrib  apt-dater-host debian-goodies libffi-dev libssl-dev ntp supervisor redis-server
 # apt-get -y  install mcelog 
 pg_ctlcluster 15 main start
     
