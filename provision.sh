@@ -93,6 +93,7 @@ systemctl enable nginx
 
 
 # Setup certbot nginx autoreload after update
+mkdir -p /etc/letsencrypt/renewal-hooks/post
 curl -s -o /etc/letsencrypt/renewal-hooks/post/nginx-reload.sh \
   https://gist.githubusercontent.com/justinhartman/79c527076ce7cc740423eb92b5600d52/raw/5709ad0ff74d713b3ab26c6b7c8999f98838ff0a/01_nginx-reload-post-hook.sh 
 chmod a+x /etc/letsencrypt/renewal-hooks/post/nginx-reload.sh
