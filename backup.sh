@@ -49,7 +49,6 @@ find /var/log/restic/ -mtime +45 -delete
         --verbose=0 >> $LOGFILE 2>&1
 
 
-curl -s -o /dev/null  https://canary.cruncher.ch/report/$CANARY_HASH/?result=$LOGFILE   >> $LOGFILE 2>&1
-
+curl -s -o /dev/null -X POST --data-binary @$LOGFILE https://canary.cruncher.ch/report/$CANARY_HASH/?result=$LOGFILE   >> $LOGFILE 2>&1
 
 echo "Finished: $(date)" >> $LOGFILE
