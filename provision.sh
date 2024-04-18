@@ -244,7 +244,7 @@ chmod 400 .restic-password
 touch .restic-ignores
 
 curl -OL https://raw.githubusercontent.com/cruncher/provision/bookworm/backup.sh
-chmod +x backup.sh
+chmod 700 backup.sh
 
 # clear
 echo "all done."
