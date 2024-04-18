@@ -22,6 +22,7 @@ mkdir -p /var/log/restic
 touch $LOGFILE
 
 echo "Start: $(date)" >> $LOGFILE
+echo "--------------------------------------" >> $LOGFILE
 
 find /var/log/restic/ -mtime +45 -delete
 
@@ -48,7 +49,7 @@ find /var/log/restic/ -mtime +45 -delete
         --exclude-caches \
         --verbose=0 >> $LOGFILE 2>&1
 
+echo "--------------------------------------" >> $LOGFILE
+echo "Finished: $(date)" >> $LOGFILE
 
 curl -s -o /dev/null -X POST --data-binary @$LOGFILE https://canary.cruncher.ch/report/$CANARY_HASH/?result=$LOGFILE   >> $LOGFILE 2>&1
-
-echo "Finished: $(date)" >> $LOGFILE
