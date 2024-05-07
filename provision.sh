@@ -90,6 +90,7 @@ apt-get -y install apt-transport-https ca-certificates curl gnupg2  software-pro
 /etc/init.d/nginx stop
 rm -f /etc/nginx/sites-enabled/default
 systemctl enable nginx
+mkdir /var/tmp/letsencrypt-auto
 
 
 # Setup certbot nginx autoreload after update
