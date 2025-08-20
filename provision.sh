@@ -64,9 +64,9 @@ apt-get autoremove  -y
 apt-get purge
 
 apt-get -y  install build-essential
-apt-get -y  install nginx postgresql postgresql-client postgresql-contrib  apt-dater-host debian-goodies libffi-dev libssl-dev ntp supervisor redis-server
+apt-get -y  install nginx postgresql postgresql-client postgresql-contrib  apt-dater-host debian-goodies libffi-dev libssl-dev openntpd supervisor redis-server
 # apt-get -y  install mcelog 
-pg_ctlcluster 15 main start
+pg_ctlcluster 17 main start
     
 # Pyenv:
 apt-get -y  install make fail2ban libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev  git
@@ -80,12 +80,22 @@ apt-get -y  install bpytop
 # /usr/bin/npm install -g clean-css-cli
 mkdir /var/log/restic
 
-apt-get -y install apt-transport-https ca-certificates curl gnupg2  software-properties-common
-# curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
-# sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
-# apt-get -y update
-# sudo apt-get -y install docker-ce docker-ce-cli containerd.io
-# apt-get -y install docker docker-compose
+apt-get -y install apt-transport-https ca-certificates curl gnupg2 
+# sudo apt-get update
+# sudo apt-get install ca-certificates curl
+# sudo install -m 0755 -d /etc/apt/keyrings
+# sudo curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
+# sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+# # Add the repository to Apt sources:
+# echo \
+#   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian \
+#   $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+#   sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+# apt-get update
+# apt-get -y install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+
 
 /etc/init.d/nginx stop
 rm -f /etc/nginx/sites-enabled/default
@@ -123,7 +133,7 @@ update-alternatives --set editor /usr/bin/vim.basic
 
 # skel content
 cd /etc/skel/
-curl -L https://raw.githubusercontent.com/cruncher/provision/bookworm/dl/skel.tar.gz | tar xvfz -
+curl -L https://raw.githubusercontent.com/cruncher/provision/trixie/dl/skel.tar.gz | tar xvfz -
 
 # SSHD conf from https://wiki.mozilla.org/Security/Guidelines/OpenSSH
 cd
@@ -231,7 +241,7 @@ systemctl restart fail2ban.service
 
 
 cd
-curl -OL https://raw.github.com/cruncher/provision/bookworm/user_add.sh
+curl -OL https://raw.github.com/cruncher/provision/trixie/user_add.sh
 chmod +x user_add.sh 
 
 cd
@@ -244,7 +254,7 @@ strings /dev/urandom | grep -o '[[:alnum:]]' | head -n 64 | tr -d '\n' > .restic
 chmod 400 .restic-password
 touch .restic-ignores
 
-curl -OL https://raw.githubusercontent.com/cruncher/provision/bookworm/backup.sh
+curl -OL https://raw.githubusercontent.com/cruncher/provision/trixie/backup.sh
 chmod 700 backup.sh
 
 # clear
