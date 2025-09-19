@@ -1,11 +1,10 @@
-Quick and dirty provisioning script, will install the following on a bare Debian Stretch:
+Quick and dirty provisioning script, will install the following on a bare Debian Trixie:
 
 * nginx
 * supervisor (with rc.d init scripts)
 * PostrgreSQL and PostGIS
 * Imaging libraries for PIL
-* virtualenv
-* memcached
+* Redis, Memcached
 
 
 Usage:
