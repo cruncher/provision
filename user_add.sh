@@ -8,6 +8,7 @@ if [ ! -d "/home/projects/$username" ]; then
         su -c "ssh-keygen -q -N '' -t rsa -f /home/projects/$username/.ssh/id_rsa" - $username
         su -c "git config --global user.name '$username deploy server'" - $username
         su -c "git config --global user.email 'info@cruncher.ch'" - $username
+        su -c "git config pull.rebase false" - $username
         su -c "createuser -drS $username" - postgres
         clear
         echo "Added $username"
