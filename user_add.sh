@@ -9,6 +9,7 @@ if [ ! -d "/home/projects/$username" ]; then
         su -c "git config --global user.name '$username deploy server'" - $username
         su -c "git config --global user.email 'info@cruncher.ch'" - $username
         su -c "git config pull.rebase false" - $username
+        su -c "curl -LsSf https://astral.sh/uv/install.sh | sh" - $username
         su -c "createuser -drS $username" - postgres
         clear
         echo "Added $username"
